@@ -2,7 +2,7 @@ import StoreLink from '../store-link/store-link'
 import * as S from './qr.styled'
 import qrImg from './qr.svg'
 import crossImg from './cross.svg'
-import { StoreLinkType } from '../types'
+import { StoreLinkType } from '../types.d'
 
 const Qr = ({
   visible,

@@ -7,5 +7,5 @@ module.exports = {
     'semi': [1, 'never'],
     '@typescript-eslint/no-unused-vars': [0]
   },
-  ignorePatterns: ['config/', 'scripts/']
+  ignorePatterns: ['config/', 'scripts/', 'build/']
 }

@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { SlideTheme } from '../types'
+import { SlideTheme } from '../types.d'
 
 export const Progress = styled.section`
   padding: 0 32px;
