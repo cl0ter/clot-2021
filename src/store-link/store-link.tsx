@@ -1,15 +1,13 @@
 import appStoreImg from './app-store.svg'
 import appleTvStoreImg from './apple-tv-store.svg'
 import * as S from './store-link.styled'
-import { useTheme } from 'styled-components'
-import { Slide, SlideTheme, StoreLinkType } from '../types.d'
+import { StoreLinkType } from '../types.d'
 
 const StoreLink = ({
   type,
 }: {
   type: StoreLinkType
 }) => {
-
   return (
     <S.AppStore>
       { type === StoreLinkType.APP_STORE
