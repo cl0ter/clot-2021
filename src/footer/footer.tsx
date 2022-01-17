@@ -35,6 +35,11 @@ const links: LinkList[] = [{
   ],
 }]
 
+const bottomLinks = [
+  { text: 'Terms of Service', url: './' },
+  { text: 'Privacy Policy', url: './' },
+]
+
 const Footer = ({
   footerRef,
 }: {
@@ -42,16 +47,32 @@ const Footer = ({
 }) => {
   return (
     <S.Footer>
-      <S.IntersectionMarker ref={ footerRef } />
-      <S.Logo>
-        <img src={ logo } alt="footer logo" />
-      </S.Logo>
-      <S.Links>
-        <Links list={ links } />
-      </S.Links>
-      <S.Copyright>
-        © 2021 Clot Ltd
-      </S.Copyright>
+      <S.Container>
+        <S.IntersectionMarker ref={ footerRef } />
+        <S.Logo>
+          <img src={ logo } alt="footer logo" />
+        </S.Logo>
+        <S.Links>
+          <Links list={ links } />
+        </S.Links>
+        <S.Bottom>
+          <S.Copy>
+            © 2021 Clot Ltd
+          </S.Copy>
+          <S.BottomLinks>
+            { bottomLinks.map((link, idx) => (
+              <S.BottomLink
+                key={ idx }
+                href={ link.url }
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                { link.text }
+              </S.BottomLink>
+            )) }
+          </S.BottomLinks>
+        </S.Bottom>
+      </S.Container>
     </S.Footer>
   )
 }

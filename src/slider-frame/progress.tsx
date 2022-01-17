@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import * as S from './progress.styled'
 import { Slide } from '../types'
 
@@ -7,16 +7,59 @@ const Progress = ({
   videoRef,
   slide,
   setSlide,
+  nextSlide,
 }: {
   slides: Slide[],
   videoRef: React.RefObject<HTMLVideoElement>,
   slide: number,
-  setSlide: (cb: (currentSlide: number) => number) => void
+  setSlide: (cb: ((currentSlide: number) => number) | number) => void,
+  nextSlide: number,
 }) => {
   const [progress, setProgress] = useState(0)
 
   const latest = useRef<number>(0)
   const timeChange = useRef<number>(0)
+
+  const videoStatus = useRef({
+    canPlay: false,
+    start: false,
+  })
+
+  const startVideo = useCallback(
+    () => {
+      if (videoRef.current === null) {
+        console.warn('video not mounted?')
+        return
+      }
+
+      console.log(videoStatus.current)
+
+      if (videoStatus.current.canPlay && videoStatus.current.start) {
+        // setSlide(0)
+
+        videoRef.current.play()
+
+        // videoStatus.current.canPlay = false
+        // videoStatus.current.start = false
+      }
+    },
+    [videoRef],
+  )
+
+  const pauseVideo = useCallback(
+    () => {
+      if (videoRef.current === null) {
+        console.warn('video not mounted?')
+        return
+      }
+
+      videoStatus.current.start = false
+
+      console.log('pausing')
+      videoRef.current.pause()
+    },
+    [videoRef],
+  )
 
   useEffect(
     () => {
@@ -24,7 +67,7 @@ const Progress = ({
         return
       }
 
-      const updateProgress = (ev: Event): void => {
+      const updateProgress = (): void => {
         if (videoRef.current === null) {
           setProgress(0)
           return
@@ -39,10 +82,14 @@ const Progress = ({
         latest.current = 0
         setProgress(0)
         setSlide(slide => slide + 1)
+
+        videoStatus.current.start = true
+        startVideo()
       }
 
       const canPlayThrough = () => {
-        video.play()
+        videoStatus.current.canPlay = true
+        startVideo()
       }
 
       const video = videoRef.current
@@ -51,8 +98,30 @@ const Progress = ({
       video.addEventListener('ended', triggerNextSlide)
       video.addEventListener('canplaythrough', canPlayThrough)
     },
-    [videoRef, slide, setSlide],
+    [videoRef, slide, setSlide, startVideo],
   )
+
+  useEffect(
+    () => {
+      if (videoRef.current === null) {
+        console.warn('video not mounted?')
+        return
+      }
+
+      if (nextSlide === -1) {
+        videoStatus.current.start = false
+        pauseVideo()
+      } else if (nextSlide === 1) {
+        videoStatus.current.start = true
+        setSlide(0)
+
+        videoRef.current.currentTime = 0
+        startVideo()
+      }
+    },
+    [nextSlide, videoRef, startVideo, pauseVideo, setSlide],
+  )
+
   const styles = useMemo(
     () => {
       return slides.map((_s, idx) => {
@@ -86,13 +155,11 @@ const Progress = ({
   return (
     <S.Progress>
       <S.Bar>
-        { slides.map((_slide, idx) => {
-          return (
-            <S.Part key={ idx }>
-              <span style={ styles[idx] } />
-            </S.Part>
-          )
-        }) }
+        { slides.map((_slide, idx) => (
+          <S.Part key={ idx }>
+            <span style={ styles[idx] } />
+          </S.Part>
+         )) }
       </S.Bar>
     </S.Progress>
   )

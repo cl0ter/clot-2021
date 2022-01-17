@@ -10,15 +10,18 @@ const theme = {
 const BackFrame = ({
   slides,
   secondActive,
+  nextSlide,
 }: {
   slides: Slide[]
   secondActive: boolean,
+  nextSlide: number,
 }) => {
   return (
     <S.Container secondActive={ secondActive }>
       <ThemeProvider theme={ theme }>
         <SliderFrame
           slides={ slides }
+          nextSlide={ nextSlide }
         />
       </ThemeProvider>
     </S.Container>

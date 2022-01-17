@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useRef, useState } from 'react'
+import { RefObject, useCallback, useEffect, useRef, useState } from 'react'
 import * as S from './header.styled'
 import Logo from './logo'
 
@@ -58,21 +58,34 @@ const Header = ({
     [footerRef, footerRoot],
   )
 
+  const handleClick = useCallback(
+    () => {
+      if (window.innerWidth <= 1024) {
+        window.open('./')
+      } else {
+        show()
+      }
+    },
+    [show],
+  )
+
   return (
     <S.Header>
-      <S.Left>
-        <S.Logo>
-          <Logo fill={ (secondActive && !intersecting) ? 'white' : '#1c1c1c' } />
-        </S.Logo>
-      </S.Left>
-      <S.Right>
-        <S.Lang>
-          <a href="./">RU</a>
-        </S.Lang>
-        <S.GetApp ref={ buttonRef }>
-          <S.Button type="button" onClick={ show }>Get App</S.Button>
-        </S.GetApp>
-      </S.Right>
+      <S.Container>
+        <S.Left>
+          <S.Logo>
+            <Logo fill={ (secondActive && !intersecting) ? 'white' : '#1c1c1c' } />
+          </S.Logo>
+        </S.Left>
+        <S.Right>
+          <S.Lang>
+            <a href="./">RU</a>
+          </S.Lang>
+          <S.GetApp ref={ buttonRef }>
+            <S.Button type="button" onClick={ handleClick }>Get App</S.Button>
+          </S.GetApp>
+        </S.Right>
+      </S.Container>
     </S.Header>
   )
 }

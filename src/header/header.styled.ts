@@ -1,17 +1,29 @@
 import styled from 'styled-components'
-import { link, button } from '../root/root.styled'
+import { link, button } from '../root/global.styled'
 
 export const Header = styled.header`
-  padding: 0 32px;
   height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   position: fixed;
   left: 0;
   top: 0;
   right: 0;
-  z-index: 5;
+  z-index: 4;
+  display: flex;
+  justify-content: center;
+
+  @media (max-width: 428px) {
+    height: 64px;
+  }
+`
+
+export const Container = styled.div`
+  padding: 0 var(--padding);
+  box-sizing: border-box;
+  max-width: 2560px;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
 `
 
 export const Left = styled.div``

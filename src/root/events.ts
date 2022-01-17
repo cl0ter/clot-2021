@@ -8,12 +8,16 @@ let blocked: boolean = false
 
 let call: ((direction: number) => void) | null = null
 
+const innerState = {
+  attached: false,
+}
+
 const reset = () => {
   if (blocked) {
     // fn was already called manually
     return
   }
-  console.log('done! total change: %o', change)
+  // console.log('done! total change: %o', change)
   blocked = true
   change = 0
 
@@ -44,26 +48,40 @@ const handleWheel = (ev: WheelEvent) => {
   debounced()
 }
 
+const handleSwipe = (ev: any) => {
+  if (ev.detail.dir === 'up') {
+    call!(1)
+  } else if (ev.detail.dir === 'down') {
+    call!(-1)
+  }
+}
+
 const add = (
   rootEl: HTMLDivElement,
   triggerFn: (direction: number) => void,
 ): void => {
-  console.log('adding events to %o', rootEl)
-  call = triggerFn
-  if (typeof call !== 'function') {
+  if (typeof triggerFn !== 'function') {
     throw new Error('Trigger fn required')
   }
 
   rootEl.addEventListener('wheel', handleWheel)
+  rootEl.addEventListener('swiped', handleSwipe)
+  call = triggerFn
+  innerState.attached = true
 }
 
 const remove = (
   rootEl: HTMLDivElement,
 ): void => {
   rootEl.removeEventListener('wheel', handleWheel)
+  rootEl.removeEventListener('swiped', handleSwipe)
+  innerState.attached = false
 }
+
+const state = innerState
 
 export {
   add,
   remove,
+  state,
 }
