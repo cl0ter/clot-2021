@@ -1,27 +1,27 @@
 import SliderFrame from '../slider-frame/slider-frame'
-import { Slide, SlideTheme } from '../types.d'
+import { Slide, SlideTheme } from '../types'
 import { ThemeProvider } from 'styled-components'
 import * as S from './front-frame.styled'
 import Footer from '../footer/footer'
 import { RefObject, useRef } from 'react'
 
 const theme = {
-  color: SlideTheme.DARK
+  color: SlideTheme.DARK,
 }
 
 const FrontFrame = ({
   slides,
-  away,
+  secondActive,
   footerRef,
   footerRoot,
 }: {
   slides: Slide[],
-  away: boolean,
+  secondActive: boolean,
   footerRef: RefObject<HTMLSpanElement | null>,
   footerRoot: any,
 }) => {
   return (
-    <S.Container className={ away ? 'away' : undefined } ref={ footerRoot }>
+    <S.Container secondActive={ secondActive } ref={ footerRoot }>
       <ThemeProvider theme={ theme }>
         <SliderFrame
           slides={ slides }

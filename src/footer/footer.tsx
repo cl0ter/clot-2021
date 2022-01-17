@@ -1,15 +1,15 @@
 import * as S from './footer.styled'
 import logo from './footer-logo.svg'
-import { LinkList } from '../types.d'
+import { LinkList } from '../types'
 import Links from './links'
 import { RefObject, useEffect, useRef } from 'react'
 
 const links: LinkList[] = [{
   title: 'APPs',
   list: [
-    { text: 'iOS', url: './', },
+    { text: 'iOS', url: './' },
     { text: 'Android', url: './', unavailable: true },
-    { text: 'Apple TV', url: './', },
+    { text: 'Apple TV', url: './' },
     { text: 'Android TV', url: './', unavailable: true },
     { text: 'Tizen', url: './', unavailable: true },
   ],

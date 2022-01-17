@@ -1,6 +1,6 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
-export const Container = styled.section`
+export const Container = styled.section<{ secondActive: boolean }>`
   width: 100%;
   height: 100%;
   overflow: auto;
@@ -8,14 +8,17 @@ export const Container = styled.section`
   top: 0;
   left: 0;
   transform-origin: center top;
-  transform: translate3d(0, 100%, 0) rotate3d(1, 0, 0, -90deg);
-  transition: transform linear 0.5s, filter linear 0.5s, z-index linear 0.5s;
-  filter: brightness(0);
-  z-index: 1;
+  transition: transform linear 0.5s, filter linear 0.5s;
+  backface-visibility: hidden;
 
-  &.away {
-    transform: translate3d(0, 0, 0) rotate3d(1, 0, 0, 0deg);
-    filter: brightness(1);
-    z-index: 4;
+  ${({ secondActive }) => secondActive
+    ? css`
+      transform: translate3d(0, 0, 0) rotate3d(1, 0, 0, 0deg);
+      filter: brightness(1);
+    `
+    : css`
+      transform: translate3d(0, 100%, 0) rotate3d(1, 0, 0, -90deg);
+      filter: brightness(0);
+    `
   }
 `

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import * as S from './progress.styled'
-import { Slide } from '../types.d'
+import { Slide } from '../types'
 
 const Progress = ({
   slides,
@@ -76,7 +76,7 @@ const Progress = ({
         }
       })
     },
-    [slide, slides, progress]
+    [slide, slides, progress],
   )
 
   if (!videoRef.current) {

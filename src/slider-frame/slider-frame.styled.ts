@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { SlideTheme } from '../types.d'
+import { SlideTheme } from '../types'
 
 export const Frame = styled.section`
   display: grid;

@@ -1,7 +1,7 @@
 import appStoreImg from './app-store.svg'
 import appleTvStoreImg from './apple-tv-store.svg'
 import * as S from './store-link.styled'
-import { StoreLinkType } from '../types.d'
+import { StoreLinkType } from '../types'
 
 const StoreLink = ({
   type,

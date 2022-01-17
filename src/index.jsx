@@ -4,7 +4,7 @@ import Root from './root/root'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Root away={ false }/>
+    <Root />
   </React.StrictMode>,
   document.getElementById('root')
 )

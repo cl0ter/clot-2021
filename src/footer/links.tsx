@@ -1,8 +1,8 @@
 import * as S from './links.styled'
-import { LinkList } from '../types.d'
+import { LinkList } from '../types'
 
 const Links = ({
-  list
+  list,
 }: {
   list: LinkList[]
 }) => {

@@ -2,9 +2,9 @@ import * as S from './slider-frame.styled'
 import StoreLink from '../store-link/store-link'
 import { useCallback, useRef, useState } from 'react'
 import Progress from './progress'
-import { Slide, StoreLinkType } from '../types.d'
+import { Slide, StoreLinkType } from '../types'
 import { useTheme } from 'styled-components'
-import { SlideTheme } from '../types.d'
+import { SlideTheme } from '../types'
 
 const SliderFrame = ({
   slides,
@@ -19,7 +19,7 @@ const SliderFrame = ({
     () => {
       setSlide(slide => slide + 1)
     },
-    []
+    [],
   )
 
   const theme = useTheme() as { color: SlideTheme }

@@ -1,21 +1,21 @@
 import { ThemeProvider } from 'styled-components'
 import SliderFrame from '../slider-frame/slider-frame'
-import { Slide, SlideTheme } from '../types.d'
+import { Slide, SlideTheme } from '../types'
 import * as S from './back-frame.styled'
 
 const theme = {
-  color: SlideTheme.LIGHT
+  color: SlideTheme.LIGHT,
 }
 
 const BackFrame = ({
   slides,
-  away,
+  secondActive,
 }: {
   slides: Slide[]
-  away: boolean,
+  secondActive: boolean,
 }) => {
   return (
-    <S.Container className={ away ? 'away' : undefined }>
+    <S.Container secondActive={ secondActive }>
       <ThemeProvider theme={ theme }>
         <SliderFrame
           slides={ slides }

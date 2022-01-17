@@ -4,12 +4,12 @@ import Logo from './logo'
 
 const Header = ({
   show,
-  away,
+  secondActive,
   footerRef,
   footerRoot,
 }: {
   show: () => void,
-  away: boolean,
+  secondActive: boolean,
   footerRef: RefObject<HTMLSpanElement | null>
   footerRoot: any,
 }) => {
@@ -22,19 +22,19 @@ const Header = ({
       }
 
       const margin = (() => {
-        if (away) {
+        if (secondActive) {
           return -buttonRef.current.clientWidth
         }
         return 0
       })()
 
       buttonRef.current.style.marginLeft = `${margin}px`
-      buttonRef.current.style.opacity = away ? '0' : '1'
+      buttonRef.current.style.opacity = secondActive ? '0' : '1'
       buttonRef.current.style.transitionDuration = '0.5s, 0.2s, 0.5s'
-      buttonRef.current.style.transitionDelay = away ? '0s, 0s, 0s' : '0s, 0.3s, 0s'
-      buttonRef.current.style.visibility = away ? 'hidden' : 'visible'
+      buttonRef.current.style.transitionDelay = secondActive ? '0s, 0s, 0s' : '0s, 0.3s, 0s'
+      buttonRef.current.style.visibility = secondActive ? 'hidden' : 'visible'
     },
-    [away]
+    [secondActive],
   )
 
   const [intersecting, setIntersecting] = useState(false)
@@ -51,18 +51,18 @@ const Header = ({
             setIntersecting(entry.isIntersecting)
           })
         },
-        { rootMargin: '0px 0px -100% 0px', root: footerRoot.current }
+        { rootMargin: '0px 0px -100% 0px', root: footerRoot.current },
       )
       observer.observe(footerRef.current)
     },
-    [footerRef, footerRoot]
+    [footerRef, footerRoot],
   )
 
   return (
     <S.Header>
       <S.Left>
         <S.Logo>
-          <Logo fill={ (away && !intersecting) ? 'white' : '#1c1c1c' } />
+          <Logo fill={ (secondActive && !intersecting) ? 'white' : '#1c1c1c' } />
         </S.Logo>
       </S.Left>
       <S.Right>
