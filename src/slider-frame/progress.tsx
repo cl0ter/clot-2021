@@ -32,8 +32,6 @@ const Progress = ({
         return
       }
 
-      console.log(videoStatus.current)
-
       if (videoStatus.current.canPlay && videoStatus.current.start) {
         // setSlide(0)
 
