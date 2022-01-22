@@ -1,7 +1,7 @@
 export type Slide = {
-  title: string,
-  description: string,
-  video: string,
+  title: string
+  description: string
+  video: string
 }
 
 export enum SlideTheme {
@@ -11,14 +11,14 @@ export enum SlideTheme {
 
 export enum StoreLinkType {
   APP_STORE,
-  APPLE_TV
+  APPLE_TV,
 }
 
 export type LinkList = {
-  title: string,
+  title: string
   list: {
-    text: string,
-    url: string,
-    unavailable?: boolean,
-  }[],
+    text: string
+    url: string
+    unavailable?: boolean
+  }[]
 }

@@ -36,12 +36,12 @@ export const List = styled.div`
 `
 
 export const Text = styled.div<{ as: 'a' | 'span' }>`
-  ${({ as }) => as === 'a'
-    ? link
-    : css`
-      color: var(--color-light-gray-50);
-    `
-  }
+  ${({ as }) =>
+    as === 'a'
+      ? link
+      : css`
+          color: var(--color-light-gray-50);
+        `}
 `
 
 export const Link = styled.div``

@@ -11,18 +11,15 @@ const SliderFrame = ({
   nextSlide,
 }: {
   slides: Slide[]
-  nextSlide: number,
+  nextSlide: number
 }) => {
   const [slide, setSlide] = useState(0)
   const videoRef = useRef<HTMLVideoElement>(null)
   const currentSlideIdx = slides.length > 1 ? slide % slides.length : 0
   const currentSlide = slides[currentSlideIdx]
-  const handleClick = useCallback(
-    () => {
-      setSlide(slide => slide + 1)
-    },
-    [],
-  )
+  const handleClick = useCallback(() => {
+    setSlide((slide) => slide + 1)
+  }, [])
 
   const theme = useTheme() as { color: SlideTheme }
 
@@ -31,17 +28,36 @@ const SliderFrame = ({
       <S.Container>
         <S.TextContainer>
           <S.Text>
-            <h1>{ currentSlide.title }</h1>
-            <h2>{ currentSlide.description }</h2>
-            <StoreLink type={ theme.color === SlideTheme.LIGHT ? StoreLinkType.APP_STORE : StoreLinkType.APPLE_TV } />
+            <h1>{currentSlide.title}</h1>
+            <h2>{currentSlide.description}</h2>
+            <StoreLink
+              type={
+                theme.color === SlideTheme.LIGHT
+                  ? StoreLinkType.APP_STORE
+                  : StoreLinkType.APPLE_TV
+              }
+            />
           </S.Text>
         </S.TextContainer>
-        <S.VideoContainer onClick={ handleClick }>
+        <S.VideoContainer onClick={handleClick}>
           <S.Video>
-            <video key={ currentSlideIdx } ref={ videoRef } src={ currentSlide.video } muted playsInline preload="metadata" />
+            <video
+              key={currentSlideIdx}
+              ref={videoRef}
+              src={currentSlide.video}
+              muted
+              playsInline
+              preload="metadata"
+            />
           </S.Video>
         </S.VideoContainer>
-        <Progress slides={ slides } videoRef={ videoRef } slide={ currentSlideIdx } setSlide={ setSlide } nextSlide={ nextSlide } />
+        <Progress
+          slides={slides}
+          videoRef={videoRef}
+          slide={currentSlideIdx}
+          setSlide={setSlide}
+          nextSlide={nextSlide}
+        />
       </S.Container>
     </S.Frame>
   )

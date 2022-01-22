@@ -8,81 +8,76 @@ const Header = ({
   footerRef,
   footerRoot,
 }: {
-  show: () => void,
-  secondActive: boolean,
+  show: () => void
+  secondActive: boolean
   footerRef: RefObject<HTMLSpanElement | null>
-  footerRoot: any,
+  footerRoot: any
 }) => {
   const buttonRef = useRef<HTMLDivElement>(null)
 
-  useEffect(
-    () => {
-      if (!buttonRef.current) {
-        return
+  useEffect(() => {
+    if (!buttonRef.current) {
+      return
+    }
+
+    const margin = (() => {
+      if (secondActive) {
+        return -buttonRef.current.clientWidth
       }
+      return 0
+    })()
 
-      const margin = (() => {
-        if (secondActive) {
-          return -buttonRef.current.clientWidth
-        }
-        return 0
-      })()
-
-      buttonRef.current.style.marginLeft = `${margin}px`
-      buttonRef.current.style.opacity = secondActive ? '0' : '1'
-      buttonRef.current.style.transitionDuration = '0.5s, 0.2s, 0.5s'
-      buttonRef.current.style.transitionDelay = secondActive ? '0s, 0s, 0s' : '0s, 0.3s, 0s'
-      buttonRef.current.style.visibility = secondActive ? 'hidden' : 'visible'
-    },
-    [secondActive],
-  )
+    buttonRef.current.style.marginLeft = `${margin}px`
+    buttonRef.current.style.opacity = secondActive ? '0' : '1'
+    buttonRef.current.style.transitionDuration = '0.5s, 0.2s, 0.5s'
+    buttonRef.current.style.transitionDelay = secondActive
+      ? '0s, 0s, 0s'
+      : '0s, 0.3s, 0s'
+    buttonRef.current.style.visibility = secondActive ? 'hidden' : 'visible'
+  }, [secondActive])
 
   const [intersecting, setIntersecting] = useState(false)
 
-  useEffect(
-    () => {
-      if (footerRef.current === null || footerRoot.current === null) {
-        return
-      }
+  useEffect(() => {
+    if (footerRef.current === null || footerRoot.current === null) {
+      return
+    }
 
-      const observer = new IntersectionObserver(
-        (entries: IntersectionObserverEntry[]) => {
-          entries.forEach(entry => {
-            setIntersecting(entry.isIntersecting)
-          })
-        },
-        { rootMargin: '0px 0px -100% 0px', root: footerRoot.current },
-      )
-      observer.observe(footerRef.current)
-    },
-    [footerRef, footerRoot],
-  )
+    const observer = new IntersectionObserver(
+      (entries: IntersectionObserverEntry[]) => {
+        entries.forEach((entry) => {
+          setIntersecting(entry.isIntersecting)
+        })
+      },
+      { rootMargin: '0px 0px -100% 0px', root: footerRoot.current },
+    )
+    observer.observe(footerRef.current)
+  }, [footerRef, footerRoot])
 
-  const handleClick = useCallback(
-    () => {
-      if (window.innerWidth <= 1024) {
-        window.open('./')
-      } else {
-        show()
-      }
-    },
-    [show],
-  )
+  const handleClick = useCallback(() => {
+    if (window.innerWidth <= 1024) {
+      window.open('./')
+    } else {
+      show()
+    }
+  }, [show])
 
   return (
     <S.Header>
       <S.Container>
         <S.Left>
           <S.Logo>
-            <Logo fill={ (secondActive && !intersecting) ? 'white' : '#1c1c1c' } />
+            <Logo fill={secondActive && !intersecting ? 'white' : '#1c1c1c'} />
           </S.Logo>
         </S.Left>
         <S.Right>
           <S.Lang>
             <a href="./">RU</a>
           </S.Lang>
-          <S.GetApp ref={ buttonRef }>
-            <S.Button type="button" onClick={ handleClick }>Get App</S.Button>
+          <S.GetApp ref={buttonRef}>
+            <S.Button type="button" onClick={handleClick}>
+              Get App
+            </S.Button>
           </S.GetApp>
         </S.Right>
       </S.Container>

@@ -26,10 +26,7 @@ const reset = () => {
   }, 1000)
 }
 
-const debounced = _debounce(
-  reset,
-  timeout,
-)
+const debounced = _debounce(reset, timeout)
 
 const handleWheel = (ev: WheelEvent) => {
   if (blocked) {
@@ -70,9 +67,7 @@ const add = (
   innerState.attached = true
 }
 
-const remove = (
-  rootEl: HTMLDivElement,
-): void => {
+const remove = (rootEl: HTMLDivElement): void => {
   rootEl.removeEventListener('wheel', handleWheel)
   rootEl.removeEventListener('swiped', handleSwipe)
   innerState.attached = false
@@ -80,8 +75,4 @@ const remove = (
 
 const state = innerState
 
-export {
-  add,
-  remove,
-  state,
-}
+export { add, remove, state }

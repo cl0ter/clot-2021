@@ -16,11 +16,13 @@ export const Qr = styled.section<{ visible: boolean }>`
   display: flex;
   justify-content: center;
 
-  ${({ visible }) => visible && css`
-    transform: scale(1);
-    opacity: 1;
-    visibility: visible;
-  `}
+  ${({ visible }) =>
+    visible &&
+    css`
+      transform: scale(1);
+      opacity: 1;
+      visibility: visible;
+    `}
 
   @media (max-width: 1024px) {
     display: none;

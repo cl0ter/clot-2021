@@ -74,17 +74,14 @@ const Root = () => {
         activeFrame !== 0 &&
         frontFrameRef.current?.scrollTop === 0
       ) {
-        activateFrame(frame => frame + direction)
-        setNextSlide(nextSlide => ({
+        activateFrame((frame) => frame + direction)
+        setNextSlide((nextSlide) => ({
           front: -1,
           back: 1,
         }))
-      } else if (
-        direction === 1 &&
-        activeFrame !== FRAMES - 1
-      ) {
-        activateFrame(frame => frame + direction)
-        setNextSlide(nextSlide => ({
+      } else if (direction === 1 && activeFrame !== FRAMES - 1) {
+        activateFrame((frame) => frame + direction)
+        setNextSlide((nextSlide) => ({
           front: 1,
           back: -1,
         }))
@@ -93,26 +90,23 @@ const Root = () => {
     [activeFrame, frontFrameRef],
   )
 
-  useEffect(
-    () => {
-      if (events.state.attached) {
-        console.log('listener attached, skipping update')
-        return
-      }
+  useEffect(() => {
+    if (events.state.attached) {
+      console.log('listener attached, skipping update')
+      return
+    }
 
-      const el = rootRef.current
+    const el = rootRef.current
+    if (el !== null) {
+      events.add(el, wheelTrigger)
+    }
+
+    return () => {
       if (el !== null) {
-        events.add(el, wheelTrigger)
+        events.remove(el)
       }
-
-      return () => {
-        if (el !== null) {
-          events.remove(el)
-        }
-      }
-    },
-    [wheelTrigger],
-  )
+    }
+  }, [wheelTrigger])
 
   const secondActive = activeFrame === 1
 
@@ -122,28 +116,42 @@ const Root = () => {
     front: 0,
   })
 
-  useEffect(
-    () => {
-      setTimeout(() => {
-        setLoaded(true)
-        setNextSlide(nextSlide => ({
-          ...nextSlide,
-          back: 1,
-        }))
-      }, 3000)
-    },
-    [],
-  )
+  useEffect(() => {
+    setTimeout(() => {
+      setLoaded(true)
+      setNextSlide((nextSlide) => ({
+        ...nextSlide,
+        back: 1,
+      }))
+    }, 3000)
+  }, [])
 
   return (
-    <StyleSheetManager disableVendorPrefixes={ false  /*process.env.NODE_ENV === 'development' */}>
-      <S.Root ref={ rootRef } data-swipe-threshold={ 50 }>
+    <StyleSheetManager
+      disableVendorPrefixes={false /*process.env.NODE_ENV === 'development' */}
+    >
+      <S.Root ref={rootRef} data-swipe-threshold={50}>
         <GlobalStyle />
-        <Loader loaded={ loaded } />
-        <Qr visible={ visible } hide={ hide } />
-        <Header show={ show } secondActive={ secondActive } footerRef={ footerRef } footerRoot={ footerRoot }/>
-        <BackFrame slides={ backSlides } secondActive={ secondActive } nextSlide={ nextSlide.back }/>
-        <FrontFrame slides={ frontSlides } secondActive={ secondActive } footerRef={ footerRef } footerRoot={ footerRoot } nextSlide={ nextSlide.front } />
+        <Loader loaded={loaded} />
+        <Qr visible={visible} hide={hide} />
+        <Header
+          show={show}
+          secondActive={secondActive}
+          footerRef={footerRef}
+          footerRoot={footerRoot}
+        />
+        <BackFrame
+          slides={backSlides}
+          secondActive={secondActive}
+          nextSlide={nextSlide.back}
+        />
+        <FrontFrame
+          slides={frontSlides}
+          secondActive={secondActive}
+          footerRef={footerRef}
+          footerRoot={footerRoot}
+          nextSlide={nextSlide.front}
+        />
       </S.Root>
     </StyleSheetManager>
   )

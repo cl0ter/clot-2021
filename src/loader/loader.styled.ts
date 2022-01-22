@@ -13,10 +13,12 @@ export const Loader = styled.section<{ loaded: boolean }>`
   visibility: visible;
   transition: opacity 0.5s, visibility 0.5s;
 
-  ${({ loaded }) => loaded && css`
-    opacity: 0;
-    visibility: hidden;
-  `}
+  ${({ loaded }) =>
+    loaded &&
+    css`
+      opacity: 0;
+      visibility: hidden;
+    `}
 `
 
 const blink = keyframes`

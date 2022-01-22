@@ -9,18 +9,18 @@ export const Frame = styled.section`
   display: flex;
   justify-content: center;
 
-  ${({ theme }) => theme.color === SlideTheme.LIGHT
-    ? css`
-      background: var(--color-light-bg);
-    `
-    : css`
-      background: var(--color-dark-bg);
+  ${({ theme }) =>
+    theme.color === SlideTheme.LIGHT
+      ? css`
+          background: var(--color-light-bg);
+        `
+      : css`
+          background: var(--color-dark-bg);
 
-      @media (max-width: 428px) {
-        background: var(--color-light-fg);
-      }
-    `
-  }
+          @media (max-width: 428px) {
+            background: var(--color-light-fg);
+          }
+        `}
 `
 
 export const Container = styled.div`
@@ -73,14 +73,14 @@ export const Text = styled.div`
   }
 
   h1 {
-    ${({ theme }) => theme.color === SlideTheme.LIGHT
-      ? css`
-        color: var(--color-light-fg);
-      `
-      : css`
-        color: var(--color-light-bg);
-      `
-    }
+    ${({ theme }) =>
+      theme.color === SlideTheme.LIGHT
+        ? css`
+            color: var(--color-light-fg);
+          `
+        : css`
+            color: var(--color-light-bg);
+          `}
     margin-bottom: 16px;
   }
 
@@ -97,15 +97,18 @@ export const Text = styled.div`
 export const Video = styled.div`
   border-radius: 24px;
   overflow: hidden;
-  ${({ theme }) => theme.color === SlideTheme.LIGHT &&
+  ${({ theme }) =>
+    theme.color === SlideTheme.LIGHT &&
     css`
-      box-shadow: 0px 1.67131px 5.01393px rgba(0, 0, 0, 0.05), 0px 16.7131px 41.7827px rgba(0, 0, 0, 0.1);
-    `
-  }
+      box-shadow: 0px 1.67131px 5.01393px rgba(0, 0, 0, 0.05),
+        0px 16.7131px 41.7827px rgba(0, 0, 0, 0.1);
+    `}
 
   video {
     max-height: calc(var(--height) - 110px - 110px);
-    max-width: calc(min(2560px, var(--width)) / 2 - var(--padding) - var(--padding));
+    max-width: calc(
+      min(2560px, var(--width)) / 2 - var(--padding) - var(--padding)
+    );
     border-radius: 24px;
     display: block;
 

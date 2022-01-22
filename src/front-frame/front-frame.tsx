@@ -16,21 +16,18 @@ const FrontFrame = ({
   footerRoot,
   nextSlide,
 }: {
-  slides: Slide[],
-  secondActive: boolean,
-  footerRef: RefObject<HTMLSpanElement | null>,
-  footerRoot: any,
-  nextSlide: number,
+  slides: Slide[]
+  secondActive: boolean
+  footerRef: RefObject<HTMLSpanElement | null>
+  footerRoot: any
+  nextSlide: number
 }) => {
   return (
-    <S.Container secondActive={ secondActive } ref={ footerRoot }>
-      <ThemeProvider theme={ theme }>
-        <SliderFrame
-          slides={ slides }
-          nextSlide={ nextSlide }
-        />
+    <S.Container secondActive={secondActive} ref={footerRoot}>
+      <ThemeProvider theme={theme}>
+        <SliderFrame slides={slides} nextSlide={nextSlide} />
       </ThemeProvider>
-      <Footer footerRef={ footerRef } />
+      <Footer footerRef={footerRef} />
     </S.Container>
   )
 }

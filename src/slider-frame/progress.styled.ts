@@ -31,14 +31,14 @@ export const Bar = styled.div`
 `
 
 export const Part = styled.div`
-  ${({ theme }) => theme.color === SlideTheme.LIGHT
-    ? css`
-      background: var(--color-light-gray-10);
-    `
-    : css`
-      background: var(--color-dark-gray-10);
-    `
-  }
+  ${({ theme }) =>
+    theme.color === SlideTheme.LIGHT
+      ? css`
+          background: var(--color-light-gray-10);
+        `
+      : css`
+          background: var(--color-dark-gray-10);
+        `}
 
   height: 100%;
   border-radius: 4px;
@@ -51,13 +51,13 @@ export const Part = styled.div`
     transition-property: width;
     transition-timing-function: linear;
 
-    ${({ theme }) => theme.color === SlideTheme.LIGHT
-      ? css`
-        background: var(--color-light-fg);
-      `
-      : css`
-        background: white;
-      `
-    }
+    ${({ theme }) =>
+      theme.color === SlideTheme.LIGHT
+        ? css`
+            background: var(--color-light-fg);
+          `
+        : css`
+            background: white;
+          `}
   }
 `
