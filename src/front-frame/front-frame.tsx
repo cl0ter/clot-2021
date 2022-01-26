@@ -6,7 +6,7 @@ import Footer from '../footer/footer'
 import { RefObject } from 'react'
 
 const theme = {
-  color: SlideTheme.DARK,
+  color: SlideTheme.DARK
 }
 
 const FrontFrame = ({
@@ -14,7 +14,7 @@ const FrontFrame = ({
   secondActive,
   footerRef,
   footerRoot,
-  nextSlide,
+  nextSlide
 }: {
   slides: Slide[]
   secondActive: boolean

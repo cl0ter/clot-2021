@@ -2,7 +2,7 @@ import * as S from './footer.styled'
 import logo from './footer-logo.svg'
 import { LinkList } from '../types'
 import Links from './links'
-import { RefObject, useEffect, useRef } from 'react'
+import { RefObject } from 'react'
 
 const links: LinkList[] = [
   {
@@ -12,41 +12,41 @@ const links: LinkList[] = [
       { text: 'Android', url: './', unavailable: true },
       { text: 'Apple TV', url: './' },
       { text: 'Android TV', url: './', unavailable: true },
-      { text: 'Tizen', url: './', unavailable: true },
-    ],
+      { text: 'Tizen', url: './', unavailable: true }
+    ]
   },
   {
     title: 'Company',
     list: [
       { text: 'About', url: './' },
       { text: 'Careers', url: './' },
-      { text: 'Contacts', url: './' },
-    ],
+      { text: 'Contacts', url: './' }
+    ]
   },
   {
     title: 'Help',
     list: [
       { text: 'Help Center', url: './' },
-      { text: 'Support', url: './' },
-    ],
+      { text: 'Support', url: './' }
+    ]
   },
   {
     title: 'Follow',
     list: [
       { text: 'Instagram', url: './' },
       { text: 'Facebook', url: './' },
-      { text: 'Twitter', url: './' },
-    ],
-  },
+      { text: 'Twitter', url: './' }
+    ]
+  }
 ]
 
 const bottomLinks = [
   { text: 'Terms of Service', url: './' },
-  { text: 'Privacy Policy', url: './' },
+  { text: 'Privacy Policy', url: './' }
 ]
 
 const Footer = ({
-  footerRef,
+  footerRef
 }: {
   footerRef: RefObject<HTMLSpanElement | null>
 }) => {

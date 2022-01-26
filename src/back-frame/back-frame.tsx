@@ -4,13 +4,13 @@ import { Slide, SlideTheme } from '../types'
 import * as S from './back-frame.styled'
 
 const theme = {
-  color: SlideTheme.LIGHT,
+  color: SlideTheme.LIGHT
 }
 
 const BackFrame = ({
   slides,
   secondActive,
-  nextSlide,
+  nextSlide
 }: {
   slides: Slide[]
   secondActive: boolean

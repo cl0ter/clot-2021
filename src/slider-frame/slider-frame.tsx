@@ -1,25 +1,22 @@
 import * as S from './slider-frame.styled'
 import StoreLink from '../store-link/store-link'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import Progress from './progress'
-import { Slide, StoreLinkType } from '../types'
+import { Slide, StoreLinkType, SlideTheme } from '../types'
 import { useTheme } from 'styled-components'
-import { SlideTheme } from '../types'
 
 const SliderFrame = ({
   slides,
-  nextSlide,
+  nextSlide
 }: {
   slides: Slide[]
   nextSlide: number
 }) => {
   const [slide, setSlide] = useState(0)
   const videoRef = useRef<HTMLVideoElement>(null)
-  const currentSlideIdx = slides.length > 1 ? slide % slides.length : 0
-  const currentSlide = slides[currentSlideIdx]
   const handleClick = useCallback(() => {
-    setSlide((slide) => slide + 1)
-  }, [])
+    setSlide((slide) => (slide + 1) % slides.length)
+  }, [slides])
 
   const theme = useTheme() as { color: SlideTheme }
 
@@ -27,34 +24,41 @@ const SliderFrame = ({
     <S.Frame>
       <S.Container>
         <S.TextContainer>
-          <S.Text>
-            <h1>{currentSlide.title}</h1>
-            <h2>{currentSlide.description}</h2>
-            <StoreLink
-              type={
-                theme.color === SlideTheme.LIGHT
-                  ? StoreLinkType.APP_STORE
-                  : StoreLinkType.APPLE_TV
-              }
-            />
-          </S.Text>
+          {slides.map(({ description, title }, idx) => (
+            <S.TextBaseline key={idx}>
+              <S.Text active={slide === idx}>
+                <h1>{title}</h1>
+                <h2>{description}</h2>
+                <StoreLink
+                  type={
+                    theme.color === SlideTheme.LIGHT
+                      ? StoreLinkType.APP_STORE
+                      : StoreLinkType.APPLE_TV
+                  }
+                />
+              </S.Text>
+            </S.TextBaseline>
+          ))}
         </S.TextContainer>
         <S.VideoContainer onClick={handleClick}>
-          <S.Video>
-            <video
-              key={currentSlideIdx}
-              ref={videoRef}
-              src={currentSlide.video}
-              muted
-              playsInline
-              preload="metadata"
-            />
-          </S.Video>
+          {slides.map(({ video }, idx) => (
+            <S.VideoBaseline key={idx}>
+              <S.Video active={slide === idx}>
+                <video
+                  // ref={videoRef}
+                  src={video}
+                  muted
+                  playsInline
+                  preload="metadata"
+                />
+              </S.Video>
+            </S.VideoBaseline>
+          ))}
         </S.VideoContainer>
         <Progress
           slides={slides}
           videoRef={videoRef}
-          slide={currentSlideIdx}
+          slide={slide}
           setSlide={setSlide}
           nextSlide={nextSlide}
         />

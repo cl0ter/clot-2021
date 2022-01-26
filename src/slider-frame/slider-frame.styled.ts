@@ -51,26 +51,31 @@ export const Container = styled.div`
 `
 
 export const TextContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
   padding: 0 var(--padding);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `
 
 export const VideoContainer = styled.div`
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
   cursor: pointer;
 `
 
-export const Text = styled.div`
-  flex: 1;
-  max-width: 768px;
+export const Text = styled.div<{ active: boolean }>`
+  flex: 0 1 768px;
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0.3s, opacity 0.3s;
 
-  @media (max-width: 1024px) {
-    max-width: none;
-  }
+  ${({ active }) =>
+    active &&
+    css`
+      opacity: 1;
+      visibility: visible;
+    `}
 
   h1 {
     ${({ theme }) =>
@@ -94,9 +99,20 @@ export const Text = styled.div`
   }
 `
 
-export const Video = styled.div`
+export const Video = styled.div<{ active: boolean }>`
   border-radius: 24px;
   overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0.3s, opacity 0.3s;
+
+  ${({ active }) =>
+    active &&
+    css`
+      opacity: 1;
+      visibility: visible;
+    `}
+
   ${({ theme }) =>
     theme.color === SlideTheme.LIGHT &&
     css`
@@ -117,4 +133,18 @@ export const Video = styled.div`
       max-width: 50vw;
     }
   }
+`
+
+export const TextBaseline = styled.div`
+  height: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+export const VideoBaseline = styled.div`
+  height: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `

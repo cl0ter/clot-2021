@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components'
 import { SlideTheme } from '../types'
 
-export const Progress = styled.section`
+export const Progress = styled.div`
   position: absolute;
   bottom: 16px;
   left: 0;
@@ -20,14 +20,10 @@ export const Bar = styled.div`
   max-width: 2560px;
   padding: 0 var(--padding);
   box-sizing: border-box;
-  height: 4px;
+  height: 2px;
   display: grid;
   grid-auto-flow: column;
   column-gap: 4px;
-
-  @media (max-width: 428px) {
-    height: 2px;
-  }
 `
 
 export const Part = styled.div`
@@ -41,11 +37,11 @@ export const Part = styled.div`
         `}
 
   height: 100%;
-  border-radius: 4px;
+  border-radius: 2px;
   overflow: hidden;
 
   span {
-    border-radius: 4px;
+    border-radius: 2px;
     display: block;
     height: 100%;
     transition-property: width;

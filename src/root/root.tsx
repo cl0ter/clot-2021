@@ -25,41 +25,41 @@ const Root = () => {
     {
       title: 'The best Wallet for NFTs',
       description: 'for iOS and Android',
-      video: appVid1,
+      video: appVid1
     },
     {
       title: 'All wallets in one place',
       description: 'some description',
-      video: appVid2,
+      video: appVid2
     },
     {
       title: 'The best Wallet for NFTs',
       description: 'for iOS and Android',
-      video: appVid1,
+      video: appVid1
     },
     {
       title: 'All wallets in one place',
       description: 'some description',
-      video: appVid2,
-    },
+      video: appVid2
+    }
   ]
 
   const frontSlides: Slide[] = [
     {
       title: 'First NFT App for TV',
       description: 'for Apple TV, Androind TV and Tizen',
-      video: tvVid1,
+      video: tvVid1
     },
     {
       title: 'All wallets in one place',
       description: 'some description',
-      video: tvVid2,
+      video: tvVid2
     },
     {
       title: 'First NFT App for TV',
       description: 'for Apple TV, Androind TV and Tizen',
-      video: tvVid1,
-    },
+      video: tvVid1
+    }
   ]
 
   const footerRef = useRef<HTMLSpanElement | null>(null)
@@ -77,17 +77,17 @@ const Root = () => {
         activateFrame((frame) => frame + direction)
         setNextSlide((nextSlide) => ({
           front: -1,
-          back: 1,
+          back: 1
         }))
       } else if (direction === 1 && activeFrame !== FRAMES - 1) {
         activateFrame((frame) => frame + direction)
         setNextSlide((nextSlide) => ({
           front: 1,
-          back: -1,
+          back: -1
         }))
       }
     },
-    [activeFrame, frontFrameRef],
+    [activeFrame, frontFrameRef]
   )
 
   useEffect(() => {
@@ -113,7 +113,7 @@ const Root = () => {
   const [loaded, setLoaded] = useState(false)
   const [nextSlide, setNextSlide] = useState({
     back: 0,
-    front: 0,
+    front: 0
   })
 
   useEffect(() => {
@@ -121,14 +121,14 @@ const Root = () => {
       setLoaded(true)
       setNextSlide((nextSlide) => ({
         ...nextSlide,
-        back: 1,
+        back: 1
       }))
     }, 3000)
   }, [])
 
   return (
     <StyleSheetManager
-      disableVendorPrefixes={false /*process.env.NODE_ENV === 'development' */}
+      disableVendorPrefixes={process.env.NODE_ENV === 'development'}
     >
       <S.Root ref={rootRef} data-swipe-threshold={50}>
         <GlobalStyle />

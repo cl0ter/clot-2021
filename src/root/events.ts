@@ -9,7 +9,7 @@ let blocked: boolean = false
 let call: ((direction: number) => void) | null = null
 
 const innerState = {
-  attached: false,
+  attached: false
 }
 
 const reset = () => {
@@ -55,7 +55,7 @@ const handleSwipe = (ev: any) => {
 
 const add = (
   rootEl: HTMLDivElement,
-  triggerFn: (direction: number) => void,
+  triggerFn: (direction: number) => void
 ): void => {
   if (typeof triggerFn !== 'function') {
     throw new Error('Trigger fn required')

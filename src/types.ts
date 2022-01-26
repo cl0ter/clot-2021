@@ -6,12 +6,12 @@ export type Slide = {
 
 export enum SlideTheme {
   DARK,
-  LIGHT,
+  LIGHT
 }
 
 export enum StoreLinkType {
   APP_STORE,
-  APPLE_TV,
+  APPLE_TV
 }
 
 export type LinkList = {

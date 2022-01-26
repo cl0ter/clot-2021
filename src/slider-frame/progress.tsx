@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import * as S from './progress.styled'
 import { Slide } from '../types'
 
@@ -7,7 +7,7 @@ const Progress = ({
   videoRef,
   slide,
   setSlide,
-  nextSlide,
+  nextSlide
 }: {
   slides: Slide[]
   videoRef: React.RefObject<HTMLVideoElement>
@@ -22,7 +22,7 @@ const Progress = ({
 
   const videoStatus = useRef({
     canPlay: false,
-    start: false,
+    start: false
   })
 
   const startVideo = useCallback(() => {
@@ -111,29 +111,25 @@ const Progress = ({
   const styles = useMemo(() => {
     return slides.map((_s, idx) => {
       let width = 0
-      let duration = 0
+      // let duration = 0
 
       if (idx < slide) {
         width = 1
-        duration = 0
+        // duration = 0
       } else if (idx > slide) {
         width = 0
-        duration = 0
+        // duration = 0
       } else {
         width = progress
-        duration = timeChange.current
+        // duration = timeChange.current
       }
 
       return {
-        width: `${width * 100}%`,
-        transitionDuration: `${duration.toFixed(2)}s`,
+        width: `${width * 100}%`
+        // transitionDuration: `${duration.toFixed(2)}s`,
       }
     })
   }, [slide, slides, progress])
-
-  if (!videoRef.current) {
-    return null
-  }
 
   return (
     <S.Progress>

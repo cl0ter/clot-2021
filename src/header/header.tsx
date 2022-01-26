@@ -6,7 +6,7 @@ const Header = ({
   show,
   secondActive,
   footerRef,
-  footerRoot,
+  footerRoot
 }: {
   show: () => void
   secondActive: boolean
@@ -49,7 +49,7 @@ const Header = ({
           setIntersecting(entry.isIntersecting)
         })
       },
-      { rootMargin: '0px 0px -100% 0px', root: footerRoot.current },
+      { rootMargin: '0px 0px -100% 0px', root: footerRoot.current }
     )
     observer.observe(footerRef.current)
   }, [footerRef, footerRoot])

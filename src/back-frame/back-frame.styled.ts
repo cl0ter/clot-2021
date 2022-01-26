@@ -7,7 +7,7 @@ export const Container = styled.section<{ secondActive: boolean }>`
   top: 0;
   left: 0;
   transform-origin: center bottom;
-  transition: transform linear 0.5s, filter linear 0.5s;
+  transition: transform linear 0.3s, filter linear 0.3s;
   backface-visibility: hidden;
 
   ${({ secondActive }) =>
