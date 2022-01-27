@@ -45,9 +45,10 @@ export const Lang = styled.div`
   display: flex;
   align-items: center;
 
-  a {
+  span {
     ${link}
     color: var(--color-light-gray-50);
+    cursor: pointer;
   }
 `
 
@@ -57,4 +58,19 @@ export const GetApp = styled.div`
 
 export const Button = styled.button`
   ${button}
+
+  @media (max-width: 1024px) {
+    display: none;
+  }
+`
+
+export const LinkButton = styled.a`
+  ${button}
+  text-decoration: none;
+  display: none;
+  line-height: 48px;
+
+  @media (max-width: 1024px) {
+    display: block;
+  }
 `

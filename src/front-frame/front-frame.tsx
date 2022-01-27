@@ -18,7 +18,7 @@ const FrontFrame = ({
 }: {
   slides: Slide[]
   secondActive: boolean
-  footerRef: RefObject<HTMLSpanElement | null>
+  footerRef: RefObject<HTMLSpanElement>
   footerRoot: any
   nextSlide: number
 }) => {

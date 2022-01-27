@@ -49,7 +49,7 @@ const SliderFrame = ({
                   src={video}
                   muted
                   playsInline
-                  preload="metadata"
+                  preload="auto"
                 />
               </S.Video>
             </S.VideoBaseline>

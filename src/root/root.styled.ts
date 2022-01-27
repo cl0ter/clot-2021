@@ -9,3 +9,16 @@ export const Root = styled.main`
   perspective: 5000px;
   transform-style: preserve-3d;
 `
+
+export const TempVideoBox = styled.div`
+  position: absolute;
+  left: 0;
+  top: 0;
+  visibility: hidden;
+
+  video {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+`

@@ -1,0 +1,22 @@
+{
+  "en": {
+    "appStoreLink": "https://apps.apple.com/us/app/apple-store/id375380948",
+    "appleTvStoreLink": "https://apps.apple.com/us/app/apple-store/id375380948",
+
+    "qrTitle": "Scan QR code to get the Clot app",
+    "qrText": "Open your smartphone camera and point it to the QR code, click on the link generated to download the app",
+    "headerGetApp": "Get App",
+
+    "headerSwitchLang": "RU"
+  },
+  "ru": {
+    "appStoreLink": "https://apps.apple.com/us/app/apple-store/id375380948",
+    "appleTvStoreLink": "https://apps.apple.com/us/app/apple-store/id375380948",
+
+    "qrTitle": "Scan QR code to get the Clot app",
+    "qrText": "Open your smartphone camera and point it to the QR code, click on the link generated to download the app",
+    "headerGetApp": "Get App",
+
+    "headerSwitchLang": "EN"
+  }
+}

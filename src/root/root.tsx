@@ -4,95 +4,94 @@ import FrontFrame from '../front-frame/front-frame'
 import Qr from '../qr/qr'
 import * as S from './root.styled'
 import { GlobalStyle } from './global.styled'
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { Slide } from '../types'
-import appVid1 from './app-1.mp4'
-import appVid2 from './app-2.mp4'
-import tvVid1 from './tv-1.mp4'
-import tvVid2 from './tv-2.mp4'
+import { createContext, useCallback, useEffect, useRef, useState } from 'react'
 import { StyleSheetManager } from 'styled-components'
 import * as events from './events'
 import Loader from '../loader/loader'
+import { useSlides } from './hooks'
+import { Lang, Texts } from '../types'
+import texts from '../../public/texts.json'
+
+type TTT = {
+  en: Partial<typeof texts['en']>
+  // ru: Partial<typeof texts['ru']>,
+}
+
+const LangContext = createContext<TTT['en']>({})
 
 const Root = () => {
-  const [visible, setVisible] = useState(false)
-  const hide = useCallback(() => setVisible(false), [])
-  const show = useCallback(() => setVisible(true), [])
+  // Lang
+  const [lang, setLang] = useState<Lang>(() => {
+    return new URLSearchParams(window.location.search).get('lang') === 'ru'
+      ? Lang.RU
+      : Lang.EN
+  })
+  const toggleLang = useCallback(() => {
+    setLang((lang) => (lang === Lang.EN ? Lang.RU : Lang.EN))
+  }, [setLang])
+
+  // Slides content
+  const tempVideoBox = useRef<HTMLDivElement>(null)
+  const [slides, texts, loaded] = useSlides(tempVideoBox, lang)
+  useEffect(() => {
+    if (!loaded) {
+      return
+    }
+    setNextSlide((nextSlide) => ({
+      ...nextSlide,
+      back: 1
+    }))
+  }, [loaded])
+
+  // QR
+  const [qrVisible, setQrVisible] = useState(false)
+  const hide = useCallback(() => setQrVisible(false), [])
+  const show = useCallback(() => setQrVisible(true), [])
+
+  // Frames
   const [activeFrame, activateFrame] = useState(0)
+  const secondActive = activeFrame === 1
   const FRAMES = 2
 
-  const backSlides: Slide[] = [
-    {
-      title: 'The best Wallet for NFTs',
-      description: 'for iOS and Android',
-      video: appVid1
-    },
-    {
-      title: 'All wallets in one place',
-      description: 'some description',
-      video: appVid2
-    },
-    {
-      title: 'The best Wallet for NFTs',
-      description: 'for iOS and Android',
-      video: appVid1
-    },
-    {
-      title: 'All wallets in one place',
-      description: 'some description',
-      video: appVid2
-    }
-  ]
+  // Slides
+  const [nextSlide, setNextSlide] = useState({ back: 0, front: 0 })
 
-  const frontSlides: Slide[] = [
-    {
-      title: 'First NFT App for TV',
-      description: 'for Apple TV, Androind TV and Tizen',
-      video: tvVid1
-    },
-    {
-      title: 'All wallets in one place',
-      description: 'some description',
-      video: tvVid2
-    },
-    {
-      title: 'First NFT App for TV',
-      description: 'for Apple TV, Androind TV and Tizen',
-      video: tvVid1
-    }
-  ]
-
-  const footerRef = useRef<HTMLSpanElement | null>(null)
-  const footerRoot = useRef<HTMLDivElement | null>(null)
-  const rootRef = useRef<HTMLDivElement | null>(null)
+  const footerRef = useRef<HTMLSpanElement>(null)
+  const footerRoot = useRef<HTMLDivElement>(null)
+  const rootRef = useRef<HTMLDivElement>(null)
   const frontFrameRef = footerRoot
 
   const wheelTrigger = useCallback(
     (direction) => {
+      if (qrVisible) {
+        console.log('QR open, ignoring wheel')
+        return
+      }
+
+      // Scrolling up
       if (
         direction === -1 &&
         activeFrame !== 0 &&
         frontFrameRef.current?.scrollTop === 0
       ) {
         activateFrame((frame) => frame + direction)
-        setNextSlide((nextSlide) => ({
-          front: -1,
-          back: 1
-        }))
+        setNextSlide({ front: -1, back: 1 })
+        // Scrolling down
       } else if (direction === 1 && activeFrame !== FRAMES - 1) {
         activateFrame((frame) => frame + direction)
-        setNextSlide((nextSlide) => ({
-          front: 1,
-          back: -1
-        }))
+        setNextSlide({ front: 1, back: -1 })
       }
     },
-    [activeFrame, frontFrameRef]
+    [activeFrame, frontFrameRef, qrVisible]
   )
 
   useEffect(() => {
     if (events.state.attached) {
-      console.log('listener attached, skipping update')
+      console.log('Listener attached, skipping update')
+      return
+    }
+    if (!loaded) {
+      console.log('Not loaded yet, skipping init')
       return
     }
 
@@ -106,55 +105,42 @@ const Root = () => {
         events.remove(el)
       }
     }
-  }, [wheelTrigger])
-
-  const secondActive = activeFrame === 1
-
-  const [loaded, setLoaded] = useState(false)
-  const [nextSlide, setNextSlide] = useState({
-    back: 0,
-    front: 0
-  })
-
-  useEffect(() => {
-    setTimeout(() => {
-      setLoaded(true)
-      setNextSlide((nextSlide) => ({
-        ...nextSlide,
-        back: 1
-      }))
-    }, 3000)
-  }, [])
+  }, [wheelTrigger, loaded])
 
   return (
     <StyleSheetManager
       disableVendorPrefixes={process.env.NODE_ENV === 'development'}
     >
-      <S.Root ref={rootRef} data-swipe-threshold={50}>
-        <GlobalStyle />
-        <Loader loaded={loaded} />
-        <Qr visible={visible} hide={hide} />
-        <Header
-          show={show}
-          secondActive={secondActive}
-          footerRef={footerRef}
-          footerRoot={footerRoot}
-        />
-        <BackFrame
-          slides={backSlides}
-          secondActive={secondActive}
-          nextSlide={nextSlide.back}
-        />
-        <FrontFrame
-          slides={frontSlides}
-          secondActive={secondActive}
-          footerRef={footerRef}
-          footerRoot={footerRoot}
-          nextSlide={nextSlide.front}
-        />
-      </S.Root>
+      <LangContext.Provider value={texts}>
+        <S.Root ref={rootRef} data-swipe-threshold={50}>
+          <GlobalStyle />
+          <S.TempVideoBox ref={tempVideoBox} />
+          <Loader loaded={loaded} />
+          <Qr visible={qrVisible} hide={hide} />
+          <Header
+            show={show}
+            toggleLang={toggleLang}
+            secondActive={secondActive}
+            footerRef={footerRef}
+            footerRoot={footerRoot}
+          />
+          <BackFrame
+            slides={slides.back}
+            secondActive={secondActive}
+            nextSlide={nextSlide.back}
+          />
+          <FrontFrame
+            slides={slides.front}
+            secondActive={secondActive}
+            footerRef={footerRef}
+            footerRoot={footerRoot}
+            nextSlide={nextSlide.front}
+          />
+        </S.Root>
+      </LangContext.Provider>
     </StyleSheetManager>
   )
 }
 
 export default Root
+export { LangContext }

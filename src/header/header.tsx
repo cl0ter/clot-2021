@@ -1,4 +1,13 @@
-import { RefObject, useCallback, useEffect, useRef, useState } from 'react'
+import {
+  RefObject,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState
+} from 'react'
+import { LangContext } from '../root/root'
+import { Lang } from '../types'
 import * as S from './header.styled'
 import Logo from './logo'
 
@@ -6,13 +15,16 @@ const Header = ({
   show,
   secondActive,
   footerRef,
-  footerRoot
+  footerRoot,
+  toggleLang
 }: {
   show: () => void
   secondActive: boolean
-  footerRef: RefObject<HTMLSpanElement | null>
-  footerRoot: any
+  footerRef: RefObject<HTMLSpanElement>
+  footerRoot: RefObject<HTMLDivElement>
+  toggleLang: any
 }) => {
+  const texts = useContext(LangContext)
   const buttonRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -54,14 +66,6 @@ const Header = ({
     observer.observe(footerRef.current)
   }, [footerRef, footerRoot])
 
-  const handleClick = useCallback(() => {
-    if (window.innerWidth <= 1024) {
-      window.open('./')
-    } else {
-      show()
-    }
-  }, [show])
-
   return (
     <S.Header>
       <S.Container>
@@ -72,12 +76,15 @@ const Header = ({
         </S.Left>
         <S.Right>
           <S.Lang>
-            <a href="./">RU</a>
+            <span onClick={toggleLang}>{texts.headerSwitchLang}</span>
           </S.Lang>
           <S.GetApp ref={buttonRef}>
-            <S.Button type="button" onClick={handleClick}>
-              Get App
+            <S.Button type="button" onClick={show}>
+              {texts.headerGetApp}
             </S.Button>
+            <S.LinkButton href={texts.appStoreLink} target="_blank">
+              {texts.headerGetApp}
+            </S.LinkButton>
           </S.GetApp>
         </S.Right>
       </S.Container>

@@ -4,6 +4,11 @@ export type Slide = {
   video: string
 }
 
+export type SlidesContent = {
+  back: Slide[]
+  front: Slide[]
+}
+
 export enum SlideTheme {
   DARK,
   LIGHT
@@ -21,4 +26,13 @@ export type LinkList = {
     url: string
     unavailable?: boolean
   }[]
+}
+
+export type Texts = {
+  [key: string]: string
+}
+
+export enum Lang {
+  RU = 'ru',
+  EN = 'en'
 }

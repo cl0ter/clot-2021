@@ -3,8 +3,12 @@ import * as S from './qr.styled'
 import qrImg from './qr.svg'
 import crossImg from './cross.svg'
 import { StoreLinkType } from '../types'
+import { useContext } from 'react'
+import { LangContext } from '../root/root'
 
 const Qr = ({ visible, hide }: { visible: boolean; hide: () => void }) => {
+  const texts = useContext(LangContext)
+
   return (
     <S.Qr visible={visible}>
       <S.Container>
@@ -14,11 +18,8 @@ const Qr = ({ visible, hide }: { visible: boolean; hide: () => void }) => {
           </S.Hide>
         </S.Header>
         <S.Left>
-          <h1>Scan QR code to get the Clot app</h1>
-          <h2>
-            Open your smartphone camera and point it to the QR code, click on
-            the link generated to download the app
-          </h2>
+          <h1>{texts.qrTitle}</h1>
+          <h2>{texts.qrText}</h2>
           <StoreLink type={StoreLinkType.APP_STORE} />
         </S.Left>
         <S.Right>

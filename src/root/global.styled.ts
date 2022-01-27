@@ -1,11 +1,11 @@
 import { createGlobalStyle, css } from 'styled-components'
-import basierCircleMedium from './basier-circle-medium.woff2'
-import basierCircleRegular from './basier-circle-regular.woff2'
+import regular from './euclid-circular-a-regular.woff2'
+import medium from './euclid-circular-a-medium.woff2'
 
 export const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
-    font: 400 16px/22px 'Basier Circle';
+    font: 400 16px/22px 'Euclid Circular A';
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -36,15 +36,15 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   @font-face {
-    font-family: 'Basier Circle';
+    font-family: 'Euclid Circular A';
     font-weight: 400;
-    src: url(${basierCircleRegular});
+    src: url(${regular});
   }
 
   @font-face {
-    font-family: 'Basier Circle';
+    font-family: 'Euclid Circular A';
     font-weight: 500;
-    src: url(${basierCircleMedium});
+    src: url(${medium});
   }
 
   h1 {

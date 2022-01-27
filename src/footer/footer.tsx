@@ -45,11 +45,7 @@ const bottomLinks = [
   { text: 'Privacy Policy', url: './' }
 ]
 
-const Footer = ({
-  footerRef
-}: {
-  footerRef: RefObject<HTMLSpanElement | null>
-}) => {
+const Footer = ({ footerRef }: { footerRef: RefObject<HTMLSpanElement> }) => {
   return (
     <S.Footer>
       <S.Container>

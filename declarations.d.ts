@@ -15,3 +15,9 @@ declare module '*.woff2' {
 
   export default woff2font
 }
+
+declare module '*.woff' {
+  const wofffont: string
+
+  export default wofffont
+}

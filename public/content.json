@@ -1,0 +1,84 @@
+{
+  "ru": {
+    "back": [
+      {
+        "title": "Топовый кошелек для NFT",
+        "description": "for iOS and Android",
+        "video": "media/app-1.mp4"
+      },
+      {
+        "title": "All wallets in one place",
+        "description": "some description",
+        "video": "media/app-2.mp4"
+      },
+      {
+        "title": "The best Wallet for NFTs",
+        "description": "for iOS and Android",
+        "video": "media/app-1.mp4"
+      },
+      {
+        "title": "All wallets in one place",
+        "description": "some description",
+        "video": "media/app-2.mp4"
+      }
+    ],
+    "front": [
+      {
+        "title": "First NFT App for TV",
+        "description": "for Apple TV, Android TV and Tizen",
+        "video": "media/tv-1.mp4"
+      },
+      {
+        "title": "All wallets in one place",
+        "description": "some description",
+        "video": "media/tv-2.mp4"
+      },
+      {
+        "title": "First NFT App for TV",
+        "description": "for Apple TV, Android TV and Tizen",
+        "video": "media/tv-1.mp4"
+      }
+    ]
+  },
+  "en": {
+    "back": [
+      {
+        "title": "The best Wallet for NFTs",
+        "description": "for iOS and Android",
+        "video": "media/app-1.mp4"
+      },
+      {
+        "title": "All wallets in one place",
+        "description": "some description",
+        "video": "media/app-2.mp4"
+      },
+      {
+        "title": "The best Wallet for NFTs",
+        "description": "for iOS and Android",
+        "video": "media/app-1.mp4"
+      },
+      {
+        "title": "All wallets in one place",
+        "description": "some description",
+        "video": "media/app-2.mp4"
+      }
+    ],
+    "front": [
+      {
+        "title": "First NFT App for TV",
+        "description": "for Apple TV, Android TV and Tizen",
+        "video": "media/tv-1.mp4"
+      },
+      {
+        "title": "All wallets in one place",
+        "description": "some description",
+        "video": "media/tv-2.mp4"
+      },
+      {
+        "title": "First NFT App for TV",
+        "description": "for Apple TV, Android TV and Tizen",
+        "video": "media/tv-1.mp4"
+      }
+    ]
+  }
+}
