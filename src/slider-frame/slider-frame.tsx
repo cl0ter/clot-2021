@@ -1,22 +1,33 @@
 import * as S from './slider-frame.styled'
 import StoreLink from '../store-link/store-link'
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import Progress from './progress'
 import { Slide, StoreLinkType, SlideTheme } from '../types'
 import { useTheme } from 'styled-components'
 
 const SliderFrame = ({
   slides,
-  nextSlide
+  frameId,
+  nextSlide,
+  setNextSlide
 }: {
   slides: Slide[]
+  frameId: string
   nextSlide: number
+  setNextSlide: any
 }) => {
   const [slide, setSlide] = useState(0)
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const handleClick = useCallback(() => {
+  const handleVideoClick = useCallback(() => {
     setSlide((slide) => (slide + 1) % slides.length)
-  }, [slides])
+    setNextSlide((state: any) => ({
+      ...state,
+      [frameId]: (slide + 1) % slides.length
+    }))
+  }, [slides, frameId, setNextSlide, slide])
+
+  useEffect(() => {
+    setSlide(nextSlide)
+  }, [nextSlide])
 
   const theme = useTheme() as { color: SlideTheme }
 
@@ -40,28 +51,23 @@ const SliderFrame = ({
             </S.TextBaseline>
           ))}
         </S.TextContainer>
-        <S.VideoContainer onClick={handleClick}>
+        <S.VideoContainer onClick={handleVideoClick}>
           {slides.map(({ video }, idx) => (
             <S.VideoBaseline key={idx}>
               <S.Video active={slide === idx}>
                 <video
-                  // ref={videoRef}
+                  className={`${frameId}-video`}
                   src={video}
                   muted
                   playsInline
                   preload="auto"
+                  controls
                 />
               </S.Video>
             </S.VideoBaseline>
           ))}
         </S.VideoContainer>
-        <Progress
-          slides={slides}
-          videoRef={videoRef}
-          slide={slide}
-          setSlide={setSlide}
-          nextSlide={nextSlide}
-        />
+        <Progress slides={slides} frameId={frameId} />
       </S.Container>
     </S.Frame>
   )

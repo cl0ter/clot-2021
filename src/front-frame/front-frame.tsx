@@ -14,18 +14,25 @@ const FrontFrame = ({
   secondActive,
   footerRef,
   footerRoot,
-  nextSlide
+  nextSlide,
+  setNextSlide
 }: {
   slides: Slide[]
   secondActive: boolean
   footerRef: RefObject<HTMLSpanElement>
-  footerRoot: any
+  footerRoot: RefObject<HTMLDivElement>
   nextSlide: number
+  setNextSlide: any
 }) => {
   return (
     <S.Container secondActive={secondActive} ref={footerRoot}>
       <ThemeProvider theme={theme}>
-        <SliderFrame slides={slides} nextSlide={nextSlide} />
+        <SliderFrame
+          slides={slides}
+          frameId="front"
+          nextSlide={nextSlide}
+          setNextSlide={setNextSlide}
+        />
       </ThemeProvider>
       <Footer footerRef={footerRef} />
     </S.Container>

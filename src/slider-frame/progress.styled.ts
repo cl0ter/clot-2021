@@ -46,6 +46,7 @@ export const Part = styled.div`
     height: 100%;
     transition-property: width;
     transition-timing-function: linear;
+    width: 0%;
 
     ${({ theme }) =>
       theme.color === SlideTheme.LIGHT

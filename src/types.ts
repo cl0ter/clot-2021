@@ -36,3 +36,5 @@ export enum Lang {
   RU = 'ru',
   EN = 'en'
 }
+
+export type SwipedEventsEvent = any

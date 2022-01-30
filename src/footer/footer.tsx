@@ -2,50 +2,15 @@ import * as S from './footer.styled'
 import logo from './footer-logo.svg'
 import { LinkList } from '../types'
 import Links from './links'
-import { RefObject } from 'react'
-
-const links: LinkList[] = [
-  {
-    title: 'APPs',
-    list: [
-      { text: 'iOS', url: './' },
-      { text: 'Android', url: './', unavailable: true },
-      { text: 'Apple TV', url: './' },
-      { text: 'Android TV', url: './', unavailable: true },
-      { text: 'Tizen', url: './', unavailable: true }
-    ]
-  },
-  {
-    title: 'Company',
-    list: [
-      { text: 'About', url: './' },
-      { text: 'Careers', url: './' },
-      { text: 'Contacts', url: './' }
-    ]
-  },
-  {
-    title: 'Help',
-    list: [
-      { text: 'Help Center', url: './' },
-      { text: 'Support', url: './' }
-    ]
-  },
-  {
-    title: 'Follow',
-    list: [
-      { text: 'Instagram', url: './' },
-      { text: 'Facebook', url: './' },
-      { text: 'Twitter', url: './' }
-    ]
-  }
-]
-
-const bottomLinks = [
-  { text: 'Terms of Service', url: './' },
-  { text: 'Privacy Policy', url: './' }
-]
+import { RefObject, useContext } from 'react'
+import { LangContext } from '../root/hooks'
 
 const Footer = ({ footerRef }: { footerRef: RefObject<HTMLSpanElement> }) => {
+  const texts = useContext(LangContext)
+
+  const footerLinks: LinkList[] = texts.footerLinks || []
+  const bottomLinks: LinkList['list'] = texts.bottomLinks || []
+
   return (
     <S.Footer>
       <S.Container>
@@ -54,10 +19,10 @@ const Footer = ({ footerRef }: { footerRef: RefObject<HTMLSpanElement> }) => {
           <img src={logo} alt="footer logo" />
         </S.Logo>
         <S.Links>
-          <Links list={links} />
+          <Links list={footerLinks} />
         </S.Links>
         <S.Bottom>
-          <S.Copy>© 2021 Clot Ltd</S.Copy>
+          <S.Copy>{texts.copyright}</S.Copy>
           <S.BottomLinks>
             {bottomLinks.map((link, idx) => (
               <S.BottomLink

@@ -7,7 +7,49 @@
     "qrText": "Open your smartphone camera and point it to the QR code, click on the link generated to download the app",
     "headerGetApp": "Get App",
 
-    "headerSwitchLang": "RU"
+    "headerSwitchLang": "RU",
+
+    "footerLinks": [
+      {
+        "title": "APPs",
+        "list": [
+          { "text": "iOS", "url": "./" },
+          { "text": "Android", "url": "./", "unavailable": true },
+          { "text": "Apple TV", "url": "./" },
+          { "text": "Android TV", "url": "./", "unavailable": true },
+          { "text": "Tizen", "url": "./", "unavailable": true }
+        ]
+      },
+      {
+        "title": "Company",
+        "list": [
+          { "text": "About", "url": "./" },
+          { "text": "Careers", "url": "./" },
+          { "text": "Contacts", "url": "./" }
+        ]
+      },
+      {
+        "title": "Help",
+        "list": [
+          { "text": "Help Center", "url": "./" },
+          { "text": "Support", "url": "./" }
+        ]
+      },
+      {
+        "title": "Follow",
+        "list": [
+          { "text": "Instagram", "url": "./" },
+          { "text": "Facebook", "url": "./" },
+          { "text": "Twitter", "url": "./" }
+        ]
+      }
+    ],
+
+    "bottomLinks": [
+      { "text": "Terms of Service", "url": "./" },
+      { "text": "Privacy Policy", "url": "./" }
+    ],
+    "copyright": "© 2021 Clot Ltd"
   },
   "ru": {
     "appStoreLink": "https://apps.apple.com/us/app/apple-store/id375380948",
@@ -17,6 +59,48 @@
     "qrText": "Open your smartphone camera and point it to the QR code, click on the link generated to download the app",
     "headerGetApp": "Get App",
 
-    "headerSwitchLang": "EN"
+    "headerSwitchLang": "EN",
+
+    "footerLinks": [
+      {
+        "title": "APPs",
+        "list": [
+          { "text": "iOS", "url": "./" },
+          { "text": "Android", "url": "./", "unavailable": true },
+          { "text": "Apple TV", "url": "./" },
+          { "text": "Android TV", "url": "./", "unavailable": true },
+          { "text": "Tizen", "url": "./", "unavailable": true }
+        ]
+      },
+      {
+        "title": "Компания",
+        "list": [
+          { "text": "О компании", "url": "./" },
+          { "text": "Вакансии", "url": "./" },
+          { "text": "Контакты", "url": "./" }
+        ]
+      },
+      {
+        "title": "Help",
+        "list": [
+          { "text": "Help Center", "url": "./" },
+          { "text": "Support", "url": "./" }
+        ]
+      },
+      {
+        "title": "Follow",
+        "list": [
+          { "text": "Instagram", "url": "./" },
+          { "text": "Facebook", "url": "./" },
+          { "text": "Twitter", "url": "./" }
+        ]
+      }
+    ],
+
+    "bottomLinks": [
+      { "text": "Terms of Service", "url": "./" },
+      { "text": "Privacy Policy", "url": "./" }
+    ],
+    "copyright": "© 2021 Clot Ltd"
   }
 }

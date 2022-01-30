@@ -1,6 +1,4 @@
 import { createGlobalStyle, css } from 'styled-components'
-import regular from './euclid-circular-a-regular.woff2'
-import medium from './euclid-circular-a-medium.woff2'
 
 export const GlobalStyle = createGlobalStyle`
   body {
@@ -33,18 +31,6 @@ export const GlobalStyle = createGlobalStyle`
     @media (max-width: 428px) {
       --padding: 16px;
     }
-  }
-
-  @font-face {
-    font-family: 'Euclid Circular A';
-    font-weight: 400;
-    src: url(${regular});
-  }
-
-  @font-face {
-    font-family: 'Euclid Circular A';
-    font-weight: 500;
-    src: url(${medium});
   }
 
   h1 {

@@ -1,5 +1,12 @@
-import { RefObject, useEffect, useState } from 'react'
+import {
+  createContext,
+  RefObject,
+  useCallback,
+  useEffect,
+  useState
+} from 'react'
 import { Lang, SlidesContent, Texts } from '../types'
+import texts from '../../public/texts.json'
 
 const cacheVideos = (res: SlidesContent, box: RefObject<HTMLDivElement>) =>
   new Promise<void>((resolve) => {
@@ -39,34 +46,72 @@ const useSlides = (box: RefObject<HTMLDivElement>, lang: Lang) => {
 
     setLoaded(false)
 
-    const req = async () => {
-      try {
-        const contentRes = await fetch(`${process.env.PUBLIC_URL}/content.json`)
-        const contentJson = await contentRes.json()
-        console.log('json loaded %o', contentJson)
+    const req = () =>
+      new Promise<void>(async (resolve) => {
+        try {
+          const contentRes = await fetch(
+            `${process.env.PUBLIC_URL}/content.json`
+          )
+          const contentJson = await contentRes.json()
 
-        await cacheVideos(contentJson[lang], box)
-        setSlides(contentJson[lang])
+          await cacheVideos(contentJson[lang], box)
+          setSlides(contentJson[lang])
 
-        const textsRes = await fetch(`${process.env.PUBLIC_URL}/texts.json`)
-        const textsJson = await textsRes.json()
-        console.log('texts loaded %o', textsJson[lang])
+          const textsRes = await fetch(`${process.env.PUBLIC_URL}/texts.json`)
+          const textsJson = await textsRes.json()
 
-        setTexts(textsJson[lang])
+          setTexts(textsJson[lang])
+          resolve()
+        } catch (reason) {
+          console.error(
+            'Failed to load and parse content.json or texts.json: %o',
+            reason
+          )
+        }
+      })
 
-        setLoaded(true)
-      } catch (reason) {
-        console.error(
-          'Failed to load and parse content.json or texts.json: %o',
-          reason
-        )
-      }
+    const delay = () => new Promise((resolve) => setTimeout(resolve, 1000))
+
+    const beginLoading = async () => {
+      await Promise.all([req(), delay()])
+      setLoaded(true)
     }
 
-    req()
+    beginLoading()
   }, [box, lang])
 
   return [slides, texts, loaded] as [SlidesContent, Texts, boolean]
 }
 
-export { useSlides }
+const defaultLang = Lang.EN
+
+type TextsJsonType = {
+  en: Partial<typeof texts['en']>
+  ru: Partial<typeof texts['ru']>
+}
+
+const LangContext = createContext<TextsJsonType[typeof defaultLang]>({})
+
+const useLang = () => {
+  const [lang, setLang] = useState<Lang>(() => {
+    return new URLSearchParams(window.location.search).get('lang') ===
+      defaultLang
+      ? Lang.RU
+      : Lang.EN
+  })
+  const toggleLang = useCallback(() => {
+    setLang((lang) => (lang === Lang.EN ? Lang.RU : Lang.EN))
+  }, [setLang])
+
+  return [lang, toggleLang] as [Lang, () => void]
+}
+
+const useQr = () => {
+  const [qrVisible, setQrVisible] = useState(false)
+  const hide = useCallback(() => setQrVisible(false), [])
+  const show = useCallback(() => setQrVisible(true), [])
+
+  return [qrVisible, show, hide] as [boolean, () => void, () => void]
+}
+
+export { LangContext, useLang, useSlides, useQr }

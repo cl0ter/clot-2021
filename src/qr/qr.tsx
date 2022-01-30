@@ -4,7 +4,7 @@ import qrImg from './qr.svg'
 import crossImg from './cross.svg'
 import { StoreLinkType } from '../types'
 import { useContext } from 'react'
-import { LangContext } from '../root/root'
+import { LangContext } from '../root/hooks'
 
 const Qr = ({ visible, hide }: { visible: boolean; hide: () => void }) => {
   const texts = useContext(LangContext)

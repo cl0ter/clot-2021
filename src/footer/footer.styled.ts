@@ -1,3 +1,4 @@
+import { RefObject } from 'react'
 import styled from 'styled-components'
 import { link } from '../root/global.styled'
 
@@ -60,7 +61,9 @@ export const Bottom = styled.div`
   }
 `
 
-export const IntersectionMarker = styled.span<{ ref: any }>`
+export const IntersectionMarker = styled.span<{
+  ref: RefObject<HTMLSpanElement>
+}>`
   position: absolute;
   top: -40px;
   left: 0;

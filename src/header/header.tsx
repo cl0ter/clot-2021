@@ -1,13 +1,5 @@
-import {
-  RefObject,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState
-} from 'react'
-import { LangContext } from '../root/root'
-import { Lang } from '../types'
+import { RefObject, useContext, useEffect, useRef, useState } from 'react'
+import { LangContext } from '../root/hooks'
 import * as S from './header.styled'
 import Logo from './logo'
 
@@ -22,7 +14,7 @@ const Header = ({
   secondActive: boolean
   footerRef: RefObject<HTMLSpanElement>
   footerRoot: RefObject<HTMLDivElement>
-  toggleLang: any
+  toggleLang: () => void
 }) => {
   const texts = useContext(LangContext)
   const buttonRef = useRef<HTMLDivElement>(null)
