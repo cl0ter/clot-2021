@@ -7,7 +7,7 @@ const cacheVideos = (res: SlidesContent, box: RefObject<HTMLDivElement>) =>
     const urls = [...res.back.map(({ video }) => video), ...res.front.map(({ video }) => video)]
 
     let loaded = 0
-    const increase = () => {
+    const increase = (evt: Event) => {
       loaded++
       if (loaded === urls.length) {
         box.current!.innerHTML = ''
@@ -18,7 +18,8 @@ const cacheVideos = (res: SlidesContent, box: RefObject<HTMLDivElement>) =>
     urls.forEach((url) => {
       const videoNode = document.createElement('video')
       videoNode.preload = 'auto'
-      videoNode.src = `${process.env.PUBLIC_URL}/${url}`
+      videoNode.src = url
+      videoNode.load()
       videoNode.addEventListener('canplaythrough', increase)
 
       box.current!.append(videoNode)
@@ -41,7 +42,14 @@ const useSlides = (box: RefObject<HTMLDivElement>, lang: Lang) => {
       new Promise<void>(async (resolve) => {
         try {
           const contentRes = await fetch(`${process.env.PUBLIC_URL}/content.json`)
-          const contentJson = await contentRes.json()
+          let contentJson = await contentRes.json()
+
+          contentJson[lang].back.forEach((item: any) => {
+            item.video = `${process.env.PUBLIC_URL}/${item.video}`
+          })
+          contentJson[lang].front.forEach((item: any) => {
+            item.video = `${process.env.PUBLIC_URL}/${item.video}`
+          })
 
           await cacheVideos(contentJson[lang], box)
           setSlides(contentJson[lang])

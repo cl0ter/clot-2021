@@ -103,14 +103,12 @@ export const Video = styled.div<{ active: boolean }>`
   border-radius: 24px;
   overflow: hidden;
   opacity: 0;
-  visibility: hidden;
-  transition: visibility 0.3s, opacity 0.3s;
+  transition: opacity 0.3s;
 
   ${({ active }) =>
     active &&
     css`
       opacity: 1;
-      visibility: visible;
     `}
 
   ${({ theme }) =>

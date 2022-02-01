@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
 import { SlideTheme } from '../../types'
 
 export const Progress = styled.div`
@@ -26,6 +26,15 @@ export const Bar = styled.div`
   column-gap: 4px;
 `
 
+const expand = keyframes`
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+`
+
 export const Part = styled.div`
   ${({ theme }) =>
     theme.color === SlideTheme.LIGHT
@@ -44,9 +53,13 @@ export const Part = styled.div`
     border-radius: 2px;
     display: block;
     height: 100%;
-    transition-property: width;
-    transition-timing-function: linear;
     width: 0%;
+    animation-play-state: paused;
+    animation-name: ${expand};
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+    animation-fill-mode: both;
+    animation-duration: 1s; // Will be overriden, prevents the bar from appearing filled initially due to fill-mode
 
     ${({ theme }) =>
       theme.color === SlideTheme.LIGHT

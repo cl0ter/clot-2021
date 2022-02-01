@@ -1,5 +1,8 @@
 import { Frame, GlobalSliderState } from './types'
 
+const pauseEvents = ['abort', 'error', 'pause', 'seeking', '__stalled', '__suspend', 'waiting']
+const resumeEvents = ['playing', '__seeked']
+
 const init = (setSliderState: any) => {
   const videos = {
     front: document.querySelectorAll<HTMLVideoElement>(`.front-video`),
@@ -13,61 +16,123 @@ const init = (setSliderState: any) => {
   let lastFrame: Frame | null = null
   let lastSliderState: GlobalSliderState | null = null
 
+  type EventsData = {
+    handleEnd: (evt: Event) => void
+    handlePause: (evt: Event) => void
+    handleResume: (evt: Event) => void
+    video: HTMLVideoElement
+  }
+
   const attachedEvents: {
-    timeupdate: (() => void) | null
-    ended: (() => void) | null
+    handleEnd: ((evt: Event) => void) | null
+    handlePause: ((evt: Event) => void) | null
+    handleResume: ((evt: Event) => void) | null
     video: HTMLVideoElement | null
   } = {
-    timeupdate: null,
-    ended: null,
+    handleEnd: null,
+    handlePause: null,
+    handleResume: null,
     video: null
   }
 
-  const removeEvents = (video: HTMLVideoElement) => {
+  // Asserts type and values
+  const assertEventsAdded = (evts: typeof attachedEvents) => {
     if (
-      attachedEvents.video === null ||
-      attachedEvents.timeupdate === null ||
-      attachedEvents.ended === null
+      evts.video === null ||
+      evts.handleEnd === null ||
+      evts.handlePause === null ||
+      evts.handleResume === null
     ) {
-      throw new Error("Events weren't added yet")
+      throw new Error("Events weren't added")
     }
-
-    attachedEvents.video.removeEventListener('timeupdate', attachedEvents.timeupdate)
-    attachedEvents.video.removeEventListener('ended', attachedEvents.ended)
   }
 
-  const addEvents = (
-    video: HTMLVideoElement,
-    events: {
-      timeupdate: () => void
-      ended: () => void
+  // Doesn't assert type, values only
+  const assertEventsRemoved = (evts: typeof attachedEvents) => {
+    if (
+      evts.video !== null ||
+      evts.handleEnd !== null ||
+      evts.handlePause !== null ||
+      evts.handleResume !== null
+    ) {
+      throw new Error("Events weren't properly removed")
     }
-  ) => {
-    attachedEvents.timeupdate = events.timeupdate
-    attachedEvents.ended = events.ended
-    attachedEvents.video = video
-    video.addEventListener('timeupdate', events.timeupdate)
-    video.addEventListener('ended', events.ended)
   }
 
-  const playVideo = (activeFrame: Frame, sliderState: GlobalSliderState) => {
+  const removeEvents = () => {
+    assertEventsAdded(attachedEvents)
+
+    for (const ev of pauseEvents) {
+      attachedEvents.video!.removeEventListener(ev, attachedEvents.handlePause!)
+    }
+    for (const ev of resumeEvents) {
+      attachedEvents.video!.removeEventListener(ev, attachedEvents.handleResume!)
+    }
+    attachedEvents.video!.removeEventListener('ended', attachedEvents.handleEnd!)
+
+    attachedEvents.handleEnd = null
+    attachedEvents.handlePause = null
+    attachedEvents.handleResume = null
+    attachedEvents.video = null
+  }
+
+  const addEvents = (evts: EventsData) => {
+    assertEventsRemoved(attachedEvents)
+
+    for (const ev of pauseEvents) {
+      evts.video.addEventListener(ev, evts.handlePause)
+    }
+    for (const ev of resumeEvents) {
+      evts.video.addEventListener(ev, evts.handleResume)
+    }
+    evts.video.addEventListener('ended', evts.handleEnd)
+
+    attachedEvents.handleEnd = evts.handleEnd
+    attachedEvents.handlePause = evts.handlePause
+    attachedEvents.handleResume = evts.handleResume
+    attachedEvents.video = evts.video
+  }
+
+  const playVideo = async (activeFrame: Frame, sliderState: GlobalSliderState) => {
     const idx = sliderState[activeFrame]
     const video = videos[activeFrame][idx]
+    const part = parts[activeFrame][idx]
 
-    const handleEnded = () => {
+    const handleEnd = () => {
       const nextIdxAfterThis = (idx + 1) % videos[activeFrame].length
       setSliderState((state: GlobalSliderState) => ({
         ...state,
         [activeFrame]: nextIdxAfterThis
       }))
     }
-    const handleTimeUpdate = () => {
-      parts[activeFrame][idx].style.width = `${(video.currentTime / video.duration) * 100}%`
+    const handlePause = (ev: Event) => {
+      part.style.animationPlayState = 'paused'
+    }
+    const handleResume = (ev: Event) => {
+      part.style.animationPlayState = 'running'
     }
 
-    addEvents(video, { ended: handleEnded, timeupdate: handleTimeUpdate })
+    addEvents({ video, handleEnd, handlePause, handleResume })
 
-    video.play()
+    await video.play()
+
+    // -- Parts handling
+    if (sliderState[activeFrame] === 0) {
+      parts[activeFrame].forEach((part) => {
+        part.style.width = '0%'
+      })
+    }
+
+    const duration = (() => {
+      if (Number.isNaN(video.duration)) {
+        console.warn('Failed to get duration for %o', video)
+        return 10
+      }
+      return video.duration
+    })()
+
+    part.style.animationDuration = `${duration}s`
+    part.style.animationName = ''
   }
 
   const stopVideo = (lastFrame: Frame, lastSliderState: GlobalSliderState) => {
@@ -77,44 +142,39 @@ const init = (setSliderState: any) => {
     lastVideo.pause()
     lastVideo.currentTime = 0
 
-    removeEvents(lastVideo)
+    removeEvents()
+
+    // -- Parts handling
+    const lastPart = parts[lastFrame][idx]
+    if (idx < parts[lastFrame].length - 1) {
+      lastPart.style.width = '100%'
+    }
+    lastPart.style.animationName = '__paused'
+    lastPart.style.animationPlayState = 'paused'
   }
 
   const updateSlide = (activeFrame: Frame, sliderState: GlobalSliderState) => {
     if (lastSliderState === null || lastFrame === null) {
-      console.log('first fire, stored last valuesss', sliderState)
-
+      // First call, store values and play vid
       playVideo(activeFrame, sliderState)
 
       lastSliderState = sliderState
       lastFrame = activeFrame
     } else if (sliderState !== lastSliderState) {
       if (lastFrame === activeFrame && lastSliderState[lastFrame] === sliderState[activeFrame]) {
-        // Ignore, don't update last values
-        console.log('frames and slides match, prob first iteration?')
+        // Frames and slides match, prob first iteration
+        // Ignore, but update last values afterwards
       } else {
-        console.log(
-          'Stopping and reseting last frame/slide: %o/%o. Playing next frame/slide: %o/%o',
-          lastFrame,
-          lastSliderState[lastFrame],
-          activeFrame,
-          sliderState[activeFrame]
-        )
+        // console.log(
+        //   'Pausing and reseting last frame/slide: %o/%o. Playing next frame/slide: %o/%o',
+        //   lastFrame,
+        //   lastSliderState[lastFrame],
+        //   activeFrame,
+        //   sliderState[activeFrame]
+        // )
 
         stopVideo(lastFrame, lastSliderState)
         playVideo(activeFrame, sliderState)
-
-        // Set last part
-        if (lastSliderState[lastFrame] < parts[lastFrame].length - 1) {
-          parts[lastFrame][lastSliderState[lastFrame]].style.width = '100%'
-        }
-
-        // Set all parts
-        if (sliderState[activeFrame] === 0) {
-          parts[activeFrame].forEach((part) => {
-            part.style.width = '0%'
-          })
-        }
       }
       lastSliderState = sliderState
       lastFrame = activeFrame
@@ -131,8 +191,9 @@ const init = (setSliderState: any) => {
     stopVideo(lastFrame, lastSliderState)
     lastFrame = null
     lastSliderState = null
-    attachedEvents.ended = null
-    attachedEvents.timeupdate = null
+    attachedEvents.handleEnd = null
+    attachedEvents.handlePause = null
+    attachedEvents.handleResume = null
     attachedEvents.video = null
   }
 

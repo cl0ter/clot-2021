@@ -44,7 +44,7 @@ const Root = () => {
   const wheelTrigger = useCallback(
     (direction) => {
       if (qrVisible) {
-        console.log('QR open, ignoring wheel')
+        // QR open, ignoring wheel
         return
       }
 

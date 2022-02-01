@@ -17,7 +17,6 @@ const reset = () => {
     // fn was already called manually
     return
   }
-  // console.log('done! total change: %o', change)
   blocked = true
   change = 0
 
@@ -53,10 +52,7 @@ const handleSwipe = (ev: any) => {
   }
 }
 
-const add = (
-  rootEl: HTMLDivElement,
-  triggerFn: (direction: number) => void
-): void => {
+const add = (rootEl: HTMLDivElement, triggerFn: (direction: number) => void): void => {
   if (typeof triggerFn !== 'function') {
     throw new Error('Trigger fn required')
   }
