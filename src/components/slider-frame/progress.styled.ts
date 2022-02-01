@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { SlideTheme } from '../types'
+import { SlideTheme } from '../../types'
 
 export const Progress = styled.div`
   position: absolute;

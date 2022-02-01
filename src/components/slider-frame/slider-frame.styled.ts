@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { SlideTheme } from '../types'
+import { SlideTheme } from '../../types'
 
 export const Frame = styled.section`
   width: 100%;
@@ -122,9 +122,7 @@ export const Video = styled.div<{ active: boolean }>`
 
   video {
     max-height: calc(var(--height) - 110px - 110px);
-    max-width: calc(
-      min(2560px, var(--width)) / 2 - var(--padding) - var(--padding)
-    );
+    max-width: calc(min(2560px, var(--width)) / 2 - var(--padding) - var(--padding));
     border-radius: 24px;
     display: block;
 

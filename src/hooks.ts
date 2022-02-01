@@ -1,19 +1,10 @@
-import {
-  createContext,
-  RefObject,
-  useCallback,
-  useEffect,
-  useState
-} from 'react'
-import { Lang, SlidesContent, Texts } from '../types'
-import texts from '../../public/texts.json'
+import { createContext, RefObject, useCallback, useEffect, useState } from 'react'
+import { Lang, SlidesContent, Texts } from './types'
+import texts from '../public/texts.json'
 
 const cacheVideos = (res: SlidesContent, box: RefObject<HTMLDivElement>) =>
   new Promise<void>((resolve) => {
-    const urls = [
-      ...res.back.map(({ video }) => video),
-      ...res.front.map(({ video }) => video)
-    ]
+    const urls = [...res.back.map(({ video }) => video), ...res.front.map(({ video }) => video)]
 
     let loaded = 0
     const increase = () => {
@@ -49,9 +40,7 @@ const useSlides = (box: RefObject<HTMLDivElement>, lang: Lang) => {
     const req = () =>
       new Promise<void>(async (resolve) => {
         try {
-          const contentRes = await fetch(
-            `${process.env.PUBLIC_URL}/content.json`
-          )
+          const contentRes = await fetch(`${process.env.PUBLIC_URL}/content.json`)
           const contentJson = await contentRes.json()
 
           await cacheVideos(contentJson[lang], box)
@@ -63,10 +52,7 @@ const useSlides = (box: RefObject<HTMLDivElement>, lang: Lang) => {
           setTexts(textsJson[lang])
           resolve()
         } catch (reason) {
-          console.error(
-            'Failed to load and parse content.json or texts.json: %o',
-            reason
-          )
+          console.error('Failed to load and parse content.json or texts.json: %o', reason)
         }
       })
 
@@ -94,8 +80,7 @@ const LangContext = createContext<TextsJsonType[typeof defaultLang]>({})
 
 const useLang = () => {
   const [lang, setLang] = useState<Lang>(() => {
-    return new URLSearchParams(window.location.search).get('lang') ===
-      defaultLang
+    return new URLSearchParams(window.location.search).get('lang') === defaultLang
       ? Lang.RU
       : Lang.EN
   })

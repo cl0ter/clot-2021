@@ -1,5 +1,5 @@
 import SliderFrame from '../slider-frame/slider-frame'
-import { Slide, SlideTheme } from '../types'
+import { Slide, SlideTheme } from '../../types'
 import { ThemeProvider } from 'styled-components'
 import * as S from './front-frame.styled'
 import Footer from '../footer/footer'
@@ -15,14 +15,14 @@ const FrontFrame = ({
   footerRef,
   footerRoot,
   nextSlide,
-  setNextSlide
+  setSliderState
 }: {
   slides: Slide[]
   secondActive: boolean
   footerRef: RefObject<HTMLSpanElement>
   footerRoot: RefObject<HTMLDivElement>
   nextSlide: number
-  setNextSlide: any
+  setSliderState: any
 }) => {
   return (
     <S.Container secondActive={secondActive} ref={footerRoot}>
@@ -31,7 +31,7 @@ const FrontFrame = ({
           slides={slides}
           frameId="front"
           nextSlide={nextSlide}
-          setNextSlide={setNextSlide}
+          setSliderState={setSliderState}
         />
       </ThemeProvider>
       <Footer footerRef={footerRef} />

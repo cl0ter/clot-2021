@@ -1,5 +1,5 @@
 import { RefObject, useContext, useEffect, useRef, useState } from 'react'
-import { LangContext } from '../root/hooks'
+import { LangContext } from '../../hooks'
 import * as S from './header.styled'
 import Logo from './logo'
 
@@ -34,9 +34,7 @@ const Header = ({
     buttonRef.current.style.marginLeft = `${margin}px`
     buttonRef.current.style.opacity = secondActive ? '0' : '1'
     buttonRef.current.style.transitionDuration = '0.5s, 0.2s, 0.5s'
-    buttonRef.current.style.transitionDelay = secondActive
-      ? '0s, 0s, 0s'
-      : '0s, 0.3s, 0s'
+    buttonRef.current.style.transitionDelay = secondActive ? '0s, 0s, 0s' : '0s, 0.3s, 0s'
     buttonRef.current.style.visibility = secondActive ? 'hidden' : 'visible'
   }, [secondActive])
 

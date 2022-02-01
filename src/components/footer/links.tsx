@@ -1,5 +1,5 @@
 import * as S from './links.styled'
-import { LinkList } from '../types'
+import { LinkList } from '../../types'
 
 const Links = ({ list }: { list: LinkList[] }) => {
   return (

@@ -1,14 +1,8 @@
 import React from 'react'
 import * as S from './progress.styled'
-import { Slide } from '../types'
+import { Slide } from '../../types'
 
-const Progress = ({
-  slides,
-  frameId
-}: {
-  slides: Slide[]
-  frameId: string
-}) => {
+const Progress = ({ slides, frameId }: { slides: Slide[]; frameId: string }) => {
   return (
     <S.Progress>
       <S.Bar>

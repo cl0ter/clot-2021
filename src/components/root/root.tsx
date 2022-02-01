@@ -6,11 +6,12 @@ import * as S from './root.styled'
 import { GlobalStyle } from './global.styled'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { StyleSheetManager } from 'styled-components'
-import * as events from './events'
+import * as events from '../../events'
 import Loader from '../loader/loader'
-import { LangContext, useLang, useQr, useSlides } from './hooks'
+import { LangContext, useLang, useQr, useSlides } from '../../hooks'
 import './fonts.css'
-import * as videoControls from './video-controls'
+import * as videoController from '../../video-controller'
+import { Frame, GlobalSliderState } from '../../types'
 
 const Root = () => {
   // Lang
@@ -24,12 +25,14 @@ const Root = () => {
   const [qrVisible, show, hide] = useQr()
 
   // Frames
-  const [activeFrame, activateFrame] = useState(0)
-  const secondActive = activeFrame === 1
-  const FRAMES = 2
+  const [activeFrame, activateFrame] = useState<Frame>(Frame.BACK)
+  const secondActive = activeFrame === Frame.FRONT
 
   // Slides
-  const [nextSlide, setNextSlide] = useState({ back: 0, front: 0 })
+  const [sliderState, setSliderState] = useState<GlobalSliderState>({
+    [Frame.BACK]: 0,
+    [Frame.FRONT]: 0
+  })
 
   // Logo intersection
   const footerRef = useRef<HTMLSpanElement>(null)
@@ -46,11 +49,15 @@ const Root = () => {
       }
 
       // Scrolling up
-      if (direction === -1 && activeFrame !== 0 && frontFrameRef.current?.scrollTop === 0) {
-        activateFrame((frame) => frame + direction)
+      if (
+        direction === -1 &&
+        activeFrame !== Frame.BACK &&
+        frontFrameRef.current?.scrollTop === 0
+      ) {
+        activateFrame(Frame.BACK)
         // Scrolling down
-      } else if (direction === 1 && activeFrame !== FRAMES - 1) {
-        activateFrame((frame) => frame + direction)
+      } else if (direction === 1 && activeFrame !== Frame.FRONT) {
+        activateFrame(Frame.FRONT)
       }
     },
     [activeFrame, frontFrameRef, qrVisible]
@@ -79,35 +86,42 @@ const Root = () => {
     }
   }, [wheelTrigger, loaded])
 
-  const vc = useRef<any>(null)
+  const vc = useRef<ReturnType<typeof videoController.init>>()
 
-  // Video controls
+  // Video controller
   useEffect(() => {
     if (!loaded) {
       return
     }
-    vc.current = videoControls.init(setNextSlide)
+    vc.current = videoController.init(setSliderState)
 
     return () => {
-      vc.current.destroy()
+      if (vc.current) {
+        vc.current.destroy()
+      }
     }
   }, [loaded])
 
-  // Frame updated
+  // Reset to 0 slide on frame change
   useEffect(() => {
     if (!loaded) {
       return
     }
-    vc.current.updateFrame(activeFrame)
+    setSliderState((state) => ({
+      ...state,
+      [activeFrame]: 0
+    }))
   }, [loaded, activeFrame])
 
-  // Slide updated
+  // Send frame/slider updates to controller
   useEffect(() => {
     if (!loaded) {
       return
     }
-    vc.current.updateSlide(nextSlide)
-  }, [loaded, nextSlide])
+    if (vc.current) {
+      vc.current.updateSlide(activeFrame, sliderState)
+    }
+  }, [loaded, activeFrame, sliderState])
 
   return (
     <StyleSheetManager disableVendorPrefixes={process.env.NODE_ENV === 'development'}>
@@ -128,16 +142,16 @@ const Root = () => {
             <BackFrame
               slides={slides.back}
               secondActive={secondActive}
-              nextSlide={nextSlide.back}
-              setNextSlide={setNextSlide}
+              nextSlide={sliderState.back}
+              setSliderState={setSliderState}
             />
             <FrontFrame
               slides={slides.front}
               secondActive={secondActive}
               footerRef={footerRef}
               footerRoot={footerRoot}
-              nextSlide={nextSlide.front}
-              setNextSlide={setNextSlide}
+              nextSlide={sliderState.front}
+              setSliderState={setSliderState}
             />
           </S.Root>
         </LangContext.Provider>

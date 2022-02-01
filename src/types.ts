@@ -38,3 +38,13 @@ export enum Lang {
 }
 
 export type SwipedEventsEvent = any
+
+export enum Frame {
+  BACK = 'back',
+  FRONT = 'front'
+}
+
+export type GlobalSliderState = {
+  [Frame.BACK]: 0
+  [Frame.FRONT]: 0
+}

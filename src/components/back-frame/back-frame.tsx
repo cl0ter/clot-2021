@@ -1,6 +1,6 @@
 import { ThemeProvider } from 'styled-components'
 import SliderFrame from '../slider-frame/slider-frame'
-import { Slide, SlideTheme } from '../types'
+import { Slide, SlideTheme } from '../../types'
 import * as S from './back-frame.styled'
 
 const theme = {
@@ -11,12 +11,12 @@ const BackFrame = ({
   slides,
   secondActive,
   nextSlide,
-  setNextSlide
+  setSliderState
 }: {
   slides: Slide[]
   secondActive: boolean
   nextSlide: number
-  setNextSlide: any
+  setSliderState: any
 }) => {
   return (
     <S.Container secondActive={secondActive}>
@@ -25,7 +25,7 @@ const BackFrame = ({
           slides={slides}
           frameId="back"
           nextSlide={nextSlide}
-          setNextSlide={setNextSlide}
+          setSliderState={setSliderState}
         />
       </ThemeProvider>
     </S.Container>

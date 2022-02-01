@@ -2,28 +2,27 @@ import * as S from './slider-frame.styled'
 import StoreLink from '../store-link/store-link'
 import { useCallback, useEffect, useState } from 'react'
 import Progress from './progress'
-import { Slide, StoreLinkType, SlideTheme } from '../types'
+import { Slide, StoreLinkType, SlideTheme } from '../../types'
 import { useTheme } from 'styled-components'
 
 const SliderFrame = ({
   slides,
   frameId,
   nextSlide,
-  setNextSlide
+  setSliderState
 }: {
   slides: Slide[]
   frameId: string
   nextSlide: number
-  setNextSlide: any
+  setSliderState: any
 }) => {
   const [slide, setSlide] = useState(0)
   const handleVideoClick = useCallback(() => {
-    setSlide((slide) => (slide + 1) % slides.length)
-    setNextSlide((state: any) => ({
+    setSliderState((state: any) => ({
       ...state,
       [frameId]: (slide + 1) % slides.length
     }))
-  }, [slides, frameId, setNextSlide, slide])
+  }, [slides, frameId, setSliderState, slide])
 
   useEffect(() => {
     setSlide(nextSlide)
@@ -61,7 +60,6 @@ const SliderFrame = ({
                   muted
                   playsInline
                   preload="auto"
-                  controls
                 />
               </S.Video>
             </S.VideoBaseline>
