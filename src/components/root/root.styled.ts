@@ -14,11 +14,13 @@ export const TempVideoBox = styled.div`
   position: absolute;
   left: 0;
   top: 0;
-  visibility: hidden;
+  opacity: 0;
 
   video {
     position: absolute;
     left: 0;
     top: 0;
+    width: 20vw;
+    height: 20vh;
   }
 `

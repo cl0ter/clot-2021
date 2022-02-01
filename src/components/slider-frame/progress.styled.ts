@@ -59,7 +59,7 @@ export const Part = styled.div`
     animation-timing-function: linear;
     animation-iteration-count: 1;
     animation-fill-mode: both;
-    animation-duration: 1s; // Will be overriden, prevents the bar from appearing filled initially due to fill-mode
+    animation-duration: 50s; // Will be overriden, prevents the bar from appearing filled initially due to fill-mode
 
     ${({ theme }) =>
       theme.color === SlideTheme.LIGHT

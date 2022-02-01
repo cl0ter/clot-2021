@@ -131,6 +131,7 @@ const init = (setSliderState: any) => {
       return video.duration
     })()
 
+    // FIXME: this should be set before the video started playing
     part.style.animationDuration = `${duration}s`
     part.style.animationName = ''
   }

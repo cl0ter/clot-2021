@@ -1,4 +1,12 @@
-import { RefObject, useContext, useEffect, useRef, useState } from 'react'
+import {
+  RefObject,
+  SyntheticEvent,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState
+} from 'react'
 import { LangContext } from '../../hooks'
 import * as S from './header.styled'
 import Logo from './logo'
@@ -56,6 +64,14 @@ const Header = ({
     observer.observe(footerRef.current)
   }, [footerRef, footerRoot])
 
+  const handleToggleLang = useCallback(
+    (evt: SyntheticEvent<HTMLSpanElement>) => {
+      evt.preventDefault()
+      toggleLang()
+    },
+    [toggleLang]
+  )
+
   return (
     <S.Header>
       <S.Container>
@@ -66,7 +82,7 @@ const Header = ({
         </S.Left>
         <S.Right>
           <S.Lang>
-            <span onClick={toggleLang}>{texts.headerSwitchLang}</span>
+            <span onClick={handleToggleLang}>{texts.headerSwitchLang}</span>
           </S.Lang>
           <S.GetApp ref={buttonRef}>
             <S.Button type="button" onClick={show}>

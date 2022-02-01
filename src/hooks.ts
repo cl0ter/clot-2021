@@ -9,6 +9,7 @@ const cacheVideos = (res: SlidesContent, box: RefObject<HTMLDivElement>) =>
     let loaded = 0
     const increase = (evt: Event) => {
       loaded++
+      // console.log('loaded %o/%o evt: %o', loaded, urls.length, evt)
       if (loaded === urls.length) {
         box.current!.innerHTML = ''
         resolve()
@@ -17,10 +18,14 @@ const cacheVideos = (res: SlidesContent, box: RefObject<HTMLDivElement>) =>
 
     urls.forEach((url) => {
       const videoNode = document.createElement('video')
+      videoNode.addEventListener('canplaythrough', increase)
+      videoNode.addEventListener('error', increase)
       videoNode.preload = 'auto'
+      videoNode.muted = true
+      videoNode.defaultMuted = true
+      videoNode.playsInline = true
       videoNode.src = url
       videoNode.load()
-      videoNode.addEventListener('canplaythrough', increase)
 
       box.current!.append(videoNode)
     })
@@ -88,9 +93,16 @@ const LangContext = createContext<TextsJsonType[typeof defaultLang]>({})
 
 const useLang = () => {
   const [lang, setLang] = useState<Lang>(() => {
-    return new URLSearchParams(window.location.search).get('lang') === defaultLang
-      ? Lang.RU
-      : Lang.EN
+    const paramLang = new URLSearchParams(window.location.search).get('lang')
+    const langs = {
+      ru: Lang.RU,
+      en: Lang.EN
+    }
+    if (paramLang && paramLang in langs) {
+      return langs[paramLang as keyof typeof langs]
+    }
+
+    return defaultLang
   })
   const toggleLang = useCallback(() => {
     setLang((lang) => (lang === Lang.EN ? Lang.RU : Lang.EN))

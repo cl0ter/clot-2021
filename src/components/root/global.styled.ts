@@ -1,11 +1,23 @@
 import { createGlobalStyle, css } from 'styled-components'
 
 export const GlobalStyle = createGlobalStyle`
+  html {
+    width: var(--width);
+    height: var(--height);
+  }
+
   body {
+    width: var(--width);
+    height: var(--height);
     margin: 0;
     font: 400 16px/22px 'Euclid Circular A';
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  #root {
+    width: var(--width);
+    height: var(--height);
   }
 
   :root {
@@ -24,8 +36,8 @@ export const GlobalStyle = createGlobalStyle`
 
     --color-red: #FF3A30;
 
-    --height: max(100vh, 500px);
-    --width: max(100vw, 320px);
+    --height: max(100%, 500px);
+    --width: max(100%, 320px);
     --padding: 32px;
 
     @media (max-width: 428px) {
