@@ -65,7 +65,7 @@ export const TextContainer = styled.div`
   }
 `
 
-export const VideoContainer = styled.div`
+export const VideoContainer = styled.div<{ horizontal: boolean; vertical: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -95,6 +95,30 @@ export const VideoContainer = styled.div`
     padding-top: 0;
     height: 500px;
   }
+
+  ${({ horizontal }) =>
+    horizontal &&
+    css`
+      @media (max-width: 1024px) and (min-width: 1024px) {
+        height: 500px;
+      }
+
+      @media (max-width: 1023px) {
+        height: 500px;
+      }
+
+      @media (max-width: 428px) {
+        height: 100px;
+      }
+
+      @media (max-width: 375px) {
+        height: 100px;
+      }
+
+      @media (max-width: 320px) {
+        height: 100px;
+      }
+    `}
 `
 
 export const Text = styled.div<{ active: boolean }>`
@@ -132,7 +156,7 @@ export const Text = styled.div<{ active: boolean }>`
   }
 `
 
-export const Video = styled.div<{ active: boolean }>`
+export const Video = styled.div<{ active: boolean; horizontal: boolean; vertical: boolean }>`
   border-radius: 24px;
   overflow: hidden;
   opacity: 0;
@@ -159,18 +183,30 @@ export const Video = styled.div<{ active: boolean }>`
     border-radius: 24px;
     display: block;
 
-    @media (max-height: 799px) {
-      max-height: min(500px, var(--vAvailable));
-    }
+    ${({ vertical }) =>
+      vertical &&
+      css`
+        @media (max-height: 799px) {
+          max-height: min(500px, var(--vAvailable));
+        }
 
-    @media (min-width: 1024px) and (max-width: 1024px) {
-      max-height: 600px;
-    }
+        @media (min-width: 1024px) and (max-width: 1024px) {
+          max-height: 600px;
+        }
 
-    @media (max-width: 1023px) {
-      max-height: 500px;
-      --hAvailable: calc((max(100vw, var(--min-width)) / 1) - var(--padding) - var(--padding));
-    }
+        @media (max-width: 1023px) {
+          max-height: 500px;
+          --hAvailable: calc((max(100vw, var(--min-width)) / 1) - var(--padding) - var(--padding));
+        }
+      `}
+
+    ${({ horizontal }) =>
+      horizontal &&
+      css`
+        @media (max-width: 1023px) {
+          --hAvailable: calc((max(100vw, var(--min-width)) / 1) - var(--padding) - var(--padding));
+        }
+      `}
   }
 `
 

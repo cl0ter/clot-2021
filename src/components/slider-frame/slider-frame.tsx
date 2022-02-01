@@ -2,7 +2,7 @@ import * as S from './slider-frame.styled'
 import StoreLink from '../store-link/store-link'
 import { useCallback, useEffect, useState } from 'react'
 import Progress from './progress'
-import { Slide, StoreLinkType, SlideTheme } from '../../types'
+import { Slide, StoreLinkType, SlideTheme, Frame } from '../../types'
 import { useTheme } from 'styled-components'
 
 const SliderFrame = ({
@@ -50,10 +50,18 @@ const SliderFrame = ({
             </S.TextBaseline>
           ))}
         </S.TextContainer>
-        <S.VideoContainer onClick={handleVideoClick}>
+        <S.VideoContainer
+          onClick={handleVideoClick}
+          horizontal={frameId === Frame.FRONT}
+          vertical={frameId === Frame.BACK}
+        >
           {slides.map(({ video }, idx) => (
             <S.VideoBaseline key={idx}>
-              <S.Video active={slide === idx}>
+              <S.Video
+                active={slide === idx}
+                horizontal={frameId === Frame.FRONT}
+                vertical={frameId === Frame.BACK}
+              >
                 <video
                   className={`${frameId}-video`}
                   src={video}
