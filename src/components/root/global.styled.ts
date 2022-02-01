@@ -36,8 +36,11 @@ export const GlobalStyle = createGlobalStyle`
 
     --color-red: #FF3A30;
 
-    --height: max(100%, 500px);
-    --width: max(100%, 320px);
+    --min-height: 400px;
+    --min-width: 320px;
+
+    --height: max(100%, var(--min-height));
+    --width: max(100%, var(--min-width));
     --padding: 32px;
 
     @media (max-width: 428px) {

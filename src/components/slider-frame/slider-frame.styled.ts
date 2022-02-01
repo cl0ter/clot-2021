@@ -55,6 +55,14 @@ export const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  @media (max-width: 1024px) {
+    height: 240px;
+  }
+
+  @media (max-width: 428px) {
+    height: 250px;
+  }
 `
 
 export const VideoContainer = styled.div`
@@ -62,6 +70,31 @@ export const VideoContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   cursor: pointer;
+
+  @media (max-width: 1024px) and (min-width: 1024px) {
+    padding-top: 140px;
+    height: 600px;
+  }
+
+  @media (max-width: 1023px) {
+    padding-top: 74px;
+    height: 500px;
+  }
+
+  @media (max-width: 428px) {
+    padding-top: 94px;
+    height: 500px;
+  }
+
+  @media (max-width: 375px) {
+    padding-top: 0;
+    height: 500px;
+  }
+
+  @media (max-width: 320px) {
+    padding-top: 0;
+    height: 500px;
+  }
 `
 
 export const Text = styled.div<{ active: boolean }>`
@@ -119,14 +152,24 @@ export const Video = styled.div<{ active: boolean }>`
     `}
 
   video {
-    max-height: calc(var(--height) - 110px - 110px);
-    max-width: calc(min(2560px, var(--width)) / 2 - var(--padding) - var(--padding));
+    --vAvailable: calc(max(100vh, var(--min-height)) - 80px - 80px);
+    --hAvailable: calc((max(100vw, var(--min-width)) / 2) - var(--padding) - var(--padding));
+    max-height: min(600px, var(--vAvailable));
+    max-width: var(--hAvailable);
     border-radius: 24px;
     display: block;
 
-    @media (max-width: 1024px) {
-      max-height: 50vh;
-      max-width: 50vw;
+    @media (max-height: 799px) {
+      max-height: min(500px, var(--vAvailable));
+    }
+
+    @media (min-width: 1024px) and (max-width: 1024px) {
+      max-height: 600px;
+    }
+
+    @media (max-width: 1023px) {
+      max-height: 500px;
+      --hAvailable: calc((max(100vw, var(--min-width)) / 1) - var(--padding) - var(--padding));
     }
   }
 `
@@ -136,6 +179,10 @@ export const TextBaseline = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 1024px) {
+    justify-content: flex-start;
+  }
 `
 
 export const VideoBaseline = styled.div`
