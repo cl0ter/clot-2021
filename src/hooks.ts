@@ -1,46 +1,35 @@
-import { createContext, RefObject, useCallback, useEffect, useState } from 'react'
+import { createContext, useCallback, useEffect, useState } from 'react'
 import { Lang, SlidesContent, Texts } from './types'
 import texts from '../public/texts.json'
 
-const cacheVideos = (res: SlidesContent, box: RefObject<HTMLDivElement>) =>
+const loadVideos = () =>
   new Promise<void>((resolve) => {
-    const urls = [...res.back.map(({ video }) => video), ...res.front.map(({ video }) => video)]
+    const videos = [
+      ...Array.from(document.querySelectorAll<HTMLVideoElement>(`.front-video`)),
+      ...Array.from(document.querySelectorAll<HTMLVideoElement>(`.back-video`))
+    ]
 
     let loaded = 0
     const increase = (evt: Event) => {
       loaded++
-      // console.log('loaded %o/%o evt: %o', loaded, urls.length, evt)
-      if (loaded === urls.length) {
-        box.current!.innerHTML = ''
+      // console.log('loaded %o/%o evt: %o', loaded, videos.length, evt)
+      if (loaded === videos.length) {
         resolve()
       }
     }
 
-    urls.forEach((url) => {
-      const videoNode = document.createElement('video')
-      videoNode.addEventListener('canplaythrough', increase)
-      videoNode.addEventListener('error', increase)
-      videoNode.preload = 'auto'
-      videoNode.muted = true
-      videoNode.defaultMuted = true
-      videoNode.playsInline = true
-      videoNode.src = url
-      videoNode.load()
-
-      box.current!.append(videoNode)
+    videos.forEach((video) => {
+      video.addEventListener('canplaythrough', increase)
+      video.addEventListener('error', increase)
     })
   })
 
-const useSlides = (box: RefObject<HTMLDivElement>, lang: Lang) => {
+const useSlides = (lang: Lang) => {
   const [slides, setSlides] = useState<SlidesContent>({ front: [], back: [] })
   const [texts, setTexts] = useState<Texts>({})
   const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
-    if (!box.current) {
-      return
-    }
-
     setLoaded(false)
 
     const req = () =>
@@ -56,8 +45,8 @@ const useSlides = (box: RefObject<HTMLDivElement>, lang: Lang) => {
             item.video = `${process.env.PUBLIC_URL}/${item.video}`
           })
 
-          await cacheVideos(contentJson[lang], box)
           setSlides(contentJson[lang])
+          await loadVideos()
 
           const textsRes = await fetch(`${process.env.PUBLIC_URL}/texts.json`)
           const textsJson = await textsRes.json()
@@ -77,7 +66,7 @@ const useSlides = (box: RefObject<HTMLDivElement>, lang: Lang) => {
     }
 
     beginLoading()
-  }, [box, lang])
+  }, [lang])
 
   return [slides, texts, loaded] as [SlidesContent, Texts, boolean]
 }

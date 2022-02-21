@@ -3,14 +3,14 @@ import { SlideTheme } from '../../types'
 
 export const Progress = styled.div`
   position: absolute;
-  bottom: 16px;
+  bottom: 12px;
   left: 0;
   right: 0;
   display: flex;
   justify-content: center;
 
   @media (max-width: 428px) {
-    top: 64px;
+    top: 60px;
     bottom: auto;
   }
 `
@@ -20,7 +20,7 @@ export const Bar = styled.div`
   max-width: 2560px;
   padding: 0 var(--padding);
   box-sizing: border-box;
-  height: 2px;
+  height: 10px;
   display: grid;
   grid-auto-flow: column;
   column-gap: 4px;
@@ -35,6 +35,12 @@ const expand = keyframes`
   }
 `
 
+export const Clickable = styled.div`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+`
+
 export const Part = styled.div`
   ${({ theme }) =>
     theme.color === SlideTheme.LIGHT
@@ -45,7 +51,8 @@ export const Part = styled.div`
           background: var(--color-dark-gray-10);
         `}
 
-  height: 100%;
+  height: 2px;
+  width: 100%;
   border-radius: 2px;
   overflow: hidden;
 

@@ -1,5 +1,5 @@
 import SliderFrame from '../slider-frame/slider-frame'
-import { Slide, SlideTheme } from '../../types'
+import { Frame, Slide, SlideTheme } from '../../types'
 import { ThemeProvider } from 'styled-components'
 import * as S from './front-frame.styled'
 import Footer from '../footer/footer'
@@ -29,7 +29,7 @@ const FrontFrame = ({
       <ThemeProvider theme={theme}>
         <SliderFrame
           slides={slides}
-          frameId="front"
+          frameId={Frame.FRONT}
           nextSlide={nextSlide}
           setSliderState={setSliderState}
         />

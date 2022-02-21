@@ -18,8 +18,7 @@ const Root = () => {
   const [lang, toggleLang] = useLang()
 
   // Slides content
-  const tempVideoBox = useRef<HTMLDivElement>(null)
-  const [slides, texts, loaded] = useSlides(tempVideoBox, lang)
+  const [slides, texts, loaded] = useSlides(lang)
 
   // QR
   const [qrVisible, show, hide] = useQr()
@@ -129,7 +128,6 @@ const Root = () => {
         <GlobalStyle />
         <LangContext.Provider value={texts}>
           <S.Root ref={rootRef} data-swipe-threshold={50}>
-            <S.TempVideoBox ref={tempVideoBox} />
             <Loader loaded={loaded} />
             <Qr visible={qrVisible} hide={hide} />
             <Header

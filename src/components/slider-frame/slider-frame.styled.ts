@@ -43,10 +43,16 @@ export const Container = styled.div`
     padding: 128px 0 0;
   }
 
-  @media (max-width: 428px) {
+  @media (min-width: 376px) and (max-width: 428px) {
     grid-template-columns: auto;
     grid-template-rows: auto 1fr;
     padding: 98px 0 0;
+  }
+
+  @media (max-width: 375px) {
+    grid-template-columns: auto;
+    grid-template-rows: auto 1fr;
+    padding: 88px 0 0;
   }
 `
 
@@ -55,13 +61,10 @@ export const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  cursor: pointer;
 
   @media (max-width: 1024px) {
-    height: 240px;
-  }
-
-  @media (max-width: 428px) {
-    height: 250px;
+    height: 220px; // Temp "default" height, on mobiles should be overwritten by js
   }
 `
 
@@ -71,52 +74,33 @@ export const VideoContainer = styled.div<{ horizontal: boolean; vertical: boolea
   justify-content: center;
   cursor: pointer;
 
-  @media (max-width: 1024px) and (min-width: 1024px) {
-    padding-top: 140px;
-    height: 600px;
-  }
-
-  @media (max-width: 1023px) {
-    padding-top: 74px;
-    height: 500px;
-  }
-
-  @media (max-width: 428px) {
-    padding-top: 94px;
-    height: 500px;
-  }
-
-  @media (max-width: 375px) {
-    padding-top: 0;
-    height: 500px;
-  }
-
-  @media (max-width: 320px) {
-    padding-top: 0;
-    height: 500px;
-  }
-
-  ${({ horizontal }) =>
-    horizontal &&
+  ${({ vertical }) =>
+    vertical &&
     css`
       @media (max-width: 1024px) and (min-width: 1024px) {
-        height: 500px;
+        margin-top: 142px;
+        height: 600px;
       }
 
       @media (max-width: 1023px) {
+        margin-top: 74px;
         height: 500px;
       }
 
       @media (max-width: 428px) {
-        height: 100px;
+        margin-top: 94px;
       }
 
       @media (max-width: 375px) {
-        height: 100px;
+        margin-top: 32px;
       }
+    `}
 
-      @media (max-width: 320px) {
-        height: 100px;
+  ${({ horizontal }) =>
+    horizontal &&
+    css`
+      @media (max-width: 1024px) {
+        margin: 36px 0;
       }
     `}
 `
@@ -192,11 +176,12 @@ export const Video = styled.div<{ active: boolean; horizontal: boolean; vertical
 
         @media (min-width: 1024px) and (max-width: 1024px) {
           max-height: 600px;
+          max-width: 100%;
         }
 
         @media (max-width: 1023px) {
           max-height: 500px;
-          --hAvailable: calc((max(100vw, var(--min-width)) / 1) - var(--padding) - var(--padding));
+          max-width: 100%;
         }
       `}
 
@@ -204,7 +189,8 @@ export const Video = styled.div<{ active: boolean; horizontal: boolean; vertical
       horizontal &&
       css`
         @media (max-width: 1023px) {
-          --hAvailable: calc((max(100vw, var(--min-width)) / 1) - var(--padding) - var(--padding));
+          max-height: 100%;
+          --hAvailable: calc(max(100vw, var(--min-width)) - var(--padding) - var(--padding));
         }
       `}
   }

@@ -117,11 +117,10 @@ const init = (setSliderState: any) => {
     await video.play()
 
     // -- Parts handling
-    if (sliderState[activeFrame] === 0) {
-      parts[activeFrame].forEach((part) => {
-        part.style.width = '0%'
-      })
-    }
+    parts[activeFrame].forEach((part, partIdx) => {
+      part.style.animationName = '__paused'
+      part.style.width = partIdx < idx ? '100%' : '0%'
+    })
 
     const duration = (() => {
       if (Number.isNaN(video.duration)) {

@@ -1,6 +1,6 @@
 import { ThemeProvider } from 'styled-components'
 import SliderFrame from '../slider-frame/slider-frame'
-import { Slide, SlideTheme } from '../../types'
+import { Frame, Slide, SlideTheme } from '../../types'
 import * as S from './back-frame.styled'
 
 const theme = {
@@ -23,7 +23,7 @@ const BackFrame = ({
       <ThemeProvider theme={theme}>
         <SliderFrame
           slides={slides}
-          frameId="back"
+          frameId={Frame.BACK}
           nextSlide={nextSlide}
           setSliderState={setSliderState}
         />
