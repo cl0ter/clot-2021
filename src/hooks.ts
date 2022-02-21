@@ -10,17 +10,23 @@ const loadVideos = () =>
     ]
 
     let loaded = 0
-    const increase = (evt: Event) => {
+    const increase = (evt: any) => {
       loaded++
-      // console.log('loaded %o/%o evt: %o', loaded, videos.length, evt)
+      // console.log(
+      //   'loaded %o/%o evt: %o',
+      //   loaded,
+      //   videos.length,
+      //   evt.type,
+      //   evt.target.querySelector('source').src
+      // )
       if (loaded === videos.length) {
         resolve()
       }
     }
 
     videos.forEach((video) => {
-      video.addEventListener('canplaythrough', increase)
       video.addEventListener('error', increase)
+      video.addEventListener('canplaythrough', increase)
     })
   })
 

@@ -103,13 +103,9 @@ const SliderFrame = ({
                 vertical={frameId === Frame.BACK}
                 data-video=""
               >
-                <video
-                  className={`${frameId}-video`}
-                  src={video}
-                  muted
-                  playsInline
-                  preload="auto"
-                />
+                <video className={`${frameId}-video`} muted playsInline preload="auto" autoPlay>
+                  <source src={video} type="video/mp4" />
+                </video>
               </S.Video>
             </S.VideoBaseline>
           ))}
