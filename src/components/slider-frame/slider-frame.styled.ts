@@ -141,10 +141,66 @@ export const Text = styled.div<{ active: boolean }>`
 `
 
 export const Video = styled.div<{ active: boolean; horizontal: boolean; vertical: boolean }>`
-  border-radius: 24px;
+  border-radius: var(--video-br);
   overflow: hidden;
   opacity: 0;
   transition: opacity 0.3s;
+
+  ${({ vertical }) =>
+    vertical &&
+    css`
+      --video-br: 24px;
+
+      @media (max-width: 1280px) {
+        --video-br: 20px;
+      }
+
+      @media (max-width: 1024px) {
+        --video-br: 24px;
+      }
+
+      @media (max-width: 768px) {
+        --video-br: 20px;
+      }
+
+      @media (max-width: 428px) {
+        --video-br: 20px;
+      }
+
+      @media (max-width: 320px) {
+        --video-br: 20px;
+      }
+    `}
+
+  ${({ horizontal }) =>
+    horizontal &&
+    css`
+      --video-br: 24px;
+
+      @media (max-width: 1440px) {
+        --video-br: 18px;
+      }
+
+      @media (max-width: 1280px) {
+        --video-br: 16px;
+      }
+
+      @media (max-width: 1024px) {
+        --video-br: 24px;
+      }
+
+      @media (max-width: 768px) {
+        --video-br: 16px;
+      }
+
+      @media (max-width: 428px) {
+        --video-br: 12px;
+      }
+
+      @media (max-width: 320px) {
+        --video-br: 9px;
+      }
+    `}
 
   ${({ active }) =>
     active &&
@@ -164,8 +220,8 @@ export const Video = styled.div<{ active: boolean; horizontal: boolean; vertical
     --hAvailable: calc((max(100vw, var(--min-width)) / 2) - var(--padding) - var(--padding));
     max-height: min(600px, var(--vAvailable));
     max-width: var(--hAvailable);
-    border-radius: 24px;
     display: block;
+    border-radius: var(--video-br);
 
     ${({ vertical }) =>
       vertical &&
