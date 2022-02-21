@@ -51,6 +51,7 @@ const useSlides = (lang: Lang) => {
             item.video = `${process.env.PUBLIC_URL}/${item.video}`
           })
 
+          setSlides({ front: [], back: [] })
           setSlides(contentJson[lang])
           await loadVideos()
 
