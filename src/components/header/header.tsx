@@ -76,7 +76,7 @@ const Header = ({
     <S.Header>
       <S.Container>
         <S.Left>
-          <S.Logo>
+          <S.Logo href="/">
             <Logo fill={secondActive && !intersecting ? 'white' : '#1c1c1c'} />
           </S.Logo>
         </S.Left>

@@ -26,13 +26,15 @@ export const Container = styled.div`
   justify-content: space-between;
 `
 
-export const Left = styled.div``
+export const Left = styled.div`
+  display: flex;
+`
 
 export const Right = styled.div`
   display: flex;
 `
 
-export const Logo = styled.div`
+export const Logo = styled.a`
   height: 20px;
 
   svg {
