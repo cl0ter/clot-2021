@@ -69,6 +69,10 @@ export const IntersectionMarker = styled.span<{
   left: 0;
   bottom: 0;
   visibility: hidden;
+
+  @media (max-width: 428px) {
+    top: -32px;
+  }
 `
 
 export const Copy = styled.div`
