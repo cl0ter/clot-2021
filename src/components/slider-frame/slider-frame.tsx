@@ -1,10 +1,11 @@
 import * as S from './slider-frame.styled'
 import StoreLink from '../store-link/store-link'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { FunctionComponent, useCallback, useEffect, useRef, useState } from 'react'
 import Progress from './progress'
-import { Slide, StoreLinkType, SlideTheme, Frame } from '../../types'
+import { StoreLinkType, SlideTheme, Frame } from '../../types'
 import { useTheme } from 'styled-components'
 import { mobile } from '../../helpers'
+import { SliderFrameProps } from './types'
 
 const resizeText = (container: HTMLDivElement | null, idx: number) => {
   if (!container) {
@@ -37,16 +38,11 @@ const resizeVideo = (container: HTMLDivElement | null) => {
   }
 }
 
-const SliderFrame = ({
+const SliderFrame: FunctionComponent<SliderFrameProps> = ({
   slides,
   frameId,
   nextSlide,
   setSliderState
-}: {
-  slides: Slide[]
-  frameId: Frame
-  nextSlide: number
-  setSliderState: any
 }) => {
   const [slide, setSlide] = useState(0)
   const handleSlideClick = useCallback(() => {

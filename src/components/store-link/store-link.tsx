@@ -4,8 +4,9 @@ import * as S from './store-link.styled'
 import { StoreLinkType } from '../../types'
 import { useCallback, useContext } from 'react'
 import { LangContext } from '../../hooks'
+import { StoreLinkProps } from './types'
 
-const StoreLink = ({ type }: { type: StoreLinkType }) => {
+const StoreLink = ({ type }: StoreLinkProps) => {
   const texts = useContext(LangContext)
 
   const handleClick = useCallback((event) => event.stopPropagation(), [])

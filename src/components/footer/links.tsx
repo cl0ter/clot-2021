@@ -1,7 +1,8 @@
 import * as S from './links.styled'
-import { LinkList } from '../../types'
+import { FunctionComponent } from 'react'
+import { LinksProps } from './types'
 
-const Links = ({ list }: { list: LinkList[] }) => {
+const Links: FunctionComponent<LinksProps> = ({ list }) => {
   return (
     <S.Container>
       {list.map((item, idx) => (

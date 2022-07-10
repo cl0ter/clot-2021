@@ -1,16 +1,8 @@
 import * as S from './progress.styled'
-import { Slide } from '../../types'
-import { useCallback } from 'react'
+import { FunctionComponent, useCallback } from 'react'
+import { ProgressProps } from './types'
 
-const Progress = ({
-  slides,
-  frameId,
-  setSliderState
-}: {
-  slides: Slide[]
-  frameId: string
-  setSliderState: any
-}) => {
+const Progress: FunctionComponent<ProgressProps> = ({ slides, frameId, setSliderState }) => {
   const handlePartClick = useCallback(
     (idx: number) => {
       setSliderState((state: any) => ({

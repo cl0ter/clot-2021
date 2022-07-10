@@ -3,10 +3,11 @@ import * as S from './qr.styled'
 import qrImg from './qr.svg'
 import crossImg from './cross.svg'
 import { StoreLinkType } from '../../types'
-import { useContext } from 'react'
+import { FunctionComponent, useContext } from 'react'
 import { LangContext } from '../../hooks'
+import { QrProps } from './types'
 
-const Qr = ({ visible, hide }: { visible: boolean; hide: () => void }) => {
+const Qr: FunctionComponent<QrProps> = ({ visible, hide }) => {
   const texts = useContext(LangContext)
 
   return (

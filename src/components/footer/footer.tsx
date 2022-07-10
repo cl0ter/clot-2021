@@ -2,10 +2,11 @@ import * as S from './footer.styled'
 import logo from './footer-logo.svg'
 import { LinkList } from '../../types'
 import Links from './links'
-import { RefObject, useContext } from 'react'
+import { FunctionComponent, useContext } from 'react'
 import { LangContext } from '../../hooks'
+import { FooterProps } from './types'
 
-const Footer = ({ footerRef }: { footerRef: RefObject<HTMLSpanElement> }) => {
+const Footer: FunctionComponent<FooterProps> = ({ footerRef }) => {
   const texts = useContext(LangContext)
 
   const footerLinks: LinkList[] = texts.footerLinks || []

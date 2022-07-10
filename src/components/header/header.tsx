@@ -1,5 +1,5 @@
 import {
-  RefObject,
+  FunctionComponent,
   SyntheticEvent,
   useCallback,
   useContext,
@@ -10,19 +10,14 @@ import {
 import { LangContext } from '../../hooks'
 import * as S from './header.styled'
 import Logo from './logo'
+import { HeaderProps } from './types'
 
-const Header = ({
+const Header: FunctionComponent<HeaderProps> = ({
   show,
   secondActive,
   footerRef,
   footerRoot,
   toggleLang
-}: {
-  show: () => void
-  secondActive: boolean
-  footerRef: RefObject<HTMLSpanElement>
-  footerRoot: RefObject<HTMLDivElement>
-  toggleLang: () => void
 }) => {
   const texts = useContext(LangContext)
   const buttonRef = useRef<HTMLDivElement>(null)
