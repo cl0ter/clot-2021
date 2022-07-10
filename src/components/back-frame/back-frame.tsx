@@ -2,21 +2,24 @@ import { ThemeProvider } from 'styled-components'
 import SliderFrame from '../slider-frame/slider-frame'
 import { Frame, Slide, SlideTheme } from '../../types'
 import * as S from './back-frame.styled'
+import { FunctionComponent } from 'react'
 
 const theme = {
   color: SlideTheme.LIGHT
 }
 
-const BackFrame = ({
-  slides,
-  secondActive,
-  nextSlide,
-  setSliderState
-}: {
+type Props = {
   slides: Slide[]
   secondActive: boolean
   nextSlide: number
   setSliderState: any
+}
+
+const BackFrame: FunctionComponent<Props> = ({
+  slides,
+  secondActive,
+  nextSlide,
+  setSliderState
 }) => {
   return (
     <S.Container secondActive={secondActive}>
