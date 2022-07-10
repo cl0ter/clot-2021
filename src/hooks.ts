@@ -10,23 +10,28 @@ const loadVideos = () =>
     ]
 
     let loaded = 0
-    const increase = (evt: any) => {
+    const increase = (evt: Event) => {
+      evt.target!.removeEventListener('error', handleError)
+      evt.target!.removeEventListener('canplaythrough', handleCanPT)
       loaded++
-      // console.log(
-      //   'loaded %o/%o evt: %o',
-      //   loaded,
-      //   videos.length,
-      //   evt.type,
-      //   evt.target.querySelector('source').src
-      // )
       if (loaded === videos.length) {
         resolve()
       }
     }
 
+    const handleCanPT = (evt: Event) => {
+      console.log('can pt: %o. Loaded: %o/%o', evt.target, loaded + 1, videos.length)
+      increase(evt)
+    }
+
+    const handleError = (evt: Event) => {
+      console.log('error (still inc tho): %o. Loaded: %o/%o', evt.target, loaded + 1, videos.length)
+      increase(evt)
+    }
+
     videos.forEach((video) => {
-      video.addEventListener('error', increase)
-      video.addEventListener('canplaythrough', increase)
+      video.addEventListener('error', handleError)
+      video.addEventListener('canplaythrough', handleCanPT)
     })
   })
 
@@ -69,6 +74,7 @@ const useSlides = (lang: Lang) => {
 
     const beginLoading = async () => {
       await Promise.all([req(), delay()])
+      console.log('done!')
       setLoaded(true)
     }
 
