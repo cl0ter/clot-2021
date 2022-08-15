@@ -239,7 +239,7 @@ export const Video = styled.div<{ active: boolean; horizontal: boolean; vertical
     ${({ horizontal }) =>
       horizontal &&
       css`
-        @media (max-width: 1023px) {
+        @media (max-width: 1024px) {
           max-height: 100%;
           --hAvailable: calc(max(100vw, var(--min-width)) - var(--padding) - var(--padding));
         }
