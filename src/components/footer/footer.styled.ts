@@ -1,4 +1,3 @@
-import { RefObject } from 'react'
 import styled from 'styled-components'
 import { link } from '../root/global.styled'
 
@@ -58,20 +57,6 @@ export const Bottom = styled.div`
     justify-content: stretch;
     flex-direction: column;
     row-gap: 48px;
-  }
-`
-
-export const IntersectionMarker = styled.span<{
-  ref: RefObject<HTMLSpanElement>
-}>`
-  position: absolute;
-  top: -40px;
-  left: 0;
-  bottom: 0;
-  visibility: hidden;
-
-  @media (max-width: 428px) {
-    top: -32px;
   }
 `
 

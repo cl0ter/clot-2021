@@ -4,9 +4,8 @@ import { LinkList } from '../../types'
 import Links from './links'
 import { FunctionComponent, useContext } from 'react'
 import { LangContext } from '../../hooks'
-import { FooterProps } from './types'
 
-const Footer: FunctionComponent<FooterProps> = ({ footerRef }) => {
+const Footer: FunctionComponent = () => {
   const texts = useContext(LangContext)
 
   const footerLinks: LinkList[] = texts.footerLinks || []
@@ -15,7 +14,6 @@ const Footer: FunctionComponent<FooterProps> = ({ footerRef }) => {
   return (
     <S.Footer>
       <S.Container>
-        <S.IntersectionMarker ref={footerRef} />
         <S.Logo>
           <img src={logo} alt="footer logo" />
         </S.Logo>

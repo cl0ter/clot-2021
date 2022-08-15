@@ -33,8 +33,6 @@ const Root = () => {
     [Frame.FRONT]: 0
   })
 
-  // Logo intersection
-  const footerRef = useRef<HTMLSpanElement>(null)
   const footerRoot = useRef<HTMLDivElement>(null)
 
   // Wheel
@@ -130,13 +128,7 @@ const Root = () => {
           <S.Root ref={rootRef} data-swipe-threshold={50}>
             <Loader loaded={loaded} />
             <Qr visible={qrVisible} hide={hide} />
-            <Header
-              show={show}
-              toggleLang={toggleLang}
-              secondActive={secondActive}
-              footerRef={footerRef}
-              footerRoot={footerRoot}
-            />
+            <Header show={show} toggleLang={toggleLang} secondActive={secondActive} />
             <BackFrame
               slides={slides.back}
               secondActive={secondActive}
@@ -146,7 +138,6 @@ const Root = () => {
             <FrontFrame
               slides={slides.front}
               secondActive={secondActive}
-              footerRef={footerRef}
               footerRoot={footerRoot}
               nextSlide={sliderState.front}
               setSliderState={setSliderState}

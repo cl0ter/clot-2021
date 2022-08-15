@@ -13,7 +13,6 @@ const theme = {
 const FrontFrame: FunctionComponent<FrontFrameProps> = ({
   slides,
   secondActive,
-  footerRef,
   footerRoot,
   nextSlide,
   setSliderState
@@ -28,7 +27,7 @@ const FrontFrame: FunctionComponent<FrontFrameProps> = ({
           setSliderState={setSliderState}
         />
       </ThemeProvider>
-      <Footer footerRef={footerRef} />
+      <Footer />
     </S.Container>
   )
 }
