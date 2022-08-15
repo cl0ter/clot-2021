@@ -132,11 +132,6 @@ export const Text = styled.div<{ active: boolean }>`
 
   h2 {
     color: var(--color-light-gray-50);
-    margin-bottom: 64px;
-
-    @media (max-width: 768px) {
-      margin-bottom: 32px;
-    }
   }
 `
 

@@ -12,7 +12,7 @@ const StoreLink = ({ type }: StoreLinkProps) => {
   const handleClick = useCallback((event) => event.stopPropagation(), [])
 
   return (
-    <S.AppStore onClick={handleClick}>
+    <S.AppStore onClick={handleClick} linkType={type}>
       {type === StoreLinkType.APP_STORE ? (
         <a href={texts.appStoreLink} target="_blank" rel="noreferrer">
           <img src={appStoreImg} alt="app store link" />

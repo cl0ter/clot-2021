@@ -7,6 +7,10 @@ import { useTheme } from 'styled-components'
 import { mobile } from '../../helpers'
 import { SliderFrameProps } from './types'
 
+// Limit resizing calls to 1
+let textResized = false
+let videoResized = false
+
 const resizeText = (container: HTMLDivElement | null, idx: number) => {
   if (!container) {
     console.warn('Not mounted?')
@@ -21,8 +25,10 @@ const resizeText = (container: HTMLDivElement | null, idx: number) => {
 
   if (mobile()) {
     container.style.height = nodes[idx].clientHeight + 'px'
-  } else {
+    textResized = true
+  } else if (textResized) {
     container.style.height = ''
+    textResized = false
   }
 }
 
@@ -35,6 +41,10 @@ const resizeVideo = (container: HTMLDivElement | null) => {
   const nodes = Array.from(container.querySelectorAll('video'))
   if (mobile()) {
     nodes.forEach((node) => (node.style.maxHeight = container.clientHeight + 'px'))
+    videoResized = true
+  } else if (videoResized) {
+    nodes.forEach((node) => (node.style.maxHeight = ''))
+    videoResized = false
   }
 }
 
