@@ -16,11 +16,10 @@ const FrontFrame: FunctionComponent<FrontFrameProps> = ({
   footerRoot,
   nextSlide,
   setSliderState,
-  swipeThreshold,
   children
 }) => {
   return (
-    <S.Container secondActive={secondActive} ref={footerRoot} data-swipe-threshold={swipeThreshold}>
+    <S.Container secondActive={secondActive} ref={footerRoot}>
       <ThemeProvider theme={theme}>
         {children}
         <SliderFrame

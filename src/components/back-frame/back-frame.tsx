@@ -13,12 +13,10 @@ const BackFrame: FunctionComponent<BackFrameProps> = ({
   slides,
   secondActive,
   nextSlide,
-  setSliderState,
-  swipeThreshold,
-  elRef
+  setSliderState
 }) => {
   return (
-    <S.Container secondActive={secondActive} data-swipe-threshold={swipeThreshold} ref={elRef}>
+    <S.Container secondActive={secondActive}>
       <ThemeProvider theme={theme}>
         <SliderFrame
           slides={slides}

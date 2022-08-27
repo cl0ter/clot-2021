@@ -9,15 +9,7 @@ let blocked: boolean = false
 
 let call: ((direction: number) => void) | null = null
 
-const elements: {
-  root: HTMLDivElement | null
-  front: HTMLDivElement | null
-  back: HTMLDivElement | null
-} = {
-  root: null,
-  front: null,
-  back: null
-}
+let root: HTMLDivElement | null = null
 
 const innerState = {
   attached: false
@@ -65,34 +57,26 @@ const handleSwipe = (ev: any) => {
 
 const add = ({
   rootEl,
-  backEl,
-  frontEl,
   triggerFn
 }: {
   rootEl: HTMLDivElement
-  backEl: HTMLDivElement
-  frontEl: HTMLDivElement
   triggerFn: (direction: number) => void
 }): void => {
-  elements.root = rootEl
-  elements.back = backEl
-  elements.front = frontEl
+  root = rootEl
   call = triggerFn
 
-  if (!elements.root || !elements.front || !elements.back || !call) {
-    throw new TypeError('Bad element root or fn provided')
+  if (!call) {
+    throw new TypeError('Bad fn provided')
   }
 
-  elements.root.addEventListener('wheel', handleWheel)
-  elements.front.addEventListener('swiped', handleSwipe)
-  elements.back.addEventListener('swiped', handleSwipe)
+  root.addEventListener('wheel', handleWheel)
+  root.addEventListener('swiped', handleSwipe)
   innerState.attached = true
 }
 
 const remove = (): void => {
-  elements.root?.removeEventListener('wheel', handleWheel)
-  elements.front?.removeEventListener('swiped', handleSwipe)
-  elements.back?.removeEventListener('swiped', handleSwipe)
+  root?.removeEventListener('wheel', handleWheel)
+  root?.removeEventListener('swiped', handleSwipe)
   innerState.attached = false
 }
 

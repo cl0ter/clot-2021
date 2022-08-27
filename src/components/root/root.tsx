@@ -13,6 +13,8 @@ import './fonts.css'
 import * as videoController from '../../video-controller'
 import { Frame, GlobalSliderState } from '../../types'
 
+const swipeThreshold = 50
+
 const Root = () => {
   // Lang
   const [lang, toggleLang] = useLang()
@@ -37,21 +39,19 @@ const Root = () => {
 
   // Wheel
   const frontFrameRef = footerRoot
-  const backFrameRef = useRef<HTMLDivElement>(null)
 
   const wheelTrigger = useCallback(
     (direction) => {
-      if (qrVisible) {
+      if (
+        frontFrameRef.current === null ||
         // QR open, ignoring wheel
+        qrVisible
+      ) {
         return
       }
 
       // Scrolling up
-      if (
-        direction === -1 &&
-        activeFrame !== Frame.BACK &&
-        frontFrameRef.current?.scrollTop === 0
-      ) {
+      if (direction === -1 && activeFrame !== Frame.BACK && frontFrameRef.current.scrollTop <= 0) {
         activateFrame(Frame.BACK)
         // Scrolling down
       } else if (direction === 1 && activeFrame !== Frame.FRONT) {
@@ -68,22 +68,14 @@ const Root = () => {
       console.warn('Listener attached, skipping update')
       return
     }
-    if (!loaded) {
+    if (!loaded || rootRef.current === null) {
       return
     }
 
-    if (
-      rootRef.current !== null &&
-      frontFrameRef.current !== null &&
-      backFrameRef.current !== null
-    ) {
-      events.add({
-        rootEl: rootRef.current,
-        frontEl: frontFrameRef.current,
-        backEl: backFrameRef.current,
-        triggerFn: wheelTrigger
-      })
-    }
+    events.add({
+      rootEl: rootRef.current,
+      triggerFn: wheelTrigger
+    })
 
     return () => {
       events.remove()
@@ -127,8 +119,6 @@ const Root = () => {
     }
   }, [loaded, activeFrame, sliderState])
 
-  const swipeThreshold = 50
-
   return (
     <StyleSheetManager disableVendorPrefixes={process.env.NODE_ENV === 'development'}>
       <>
@@ -143,8 +133,6 @@ const Root = () => {
               secondActive={secondActive}
               nextSlide={sliderState.back}
               setSliderState={setSliderState}
-              swipeThreshold={swipeThreshold}
-              elRef={backFrameRef}
             />
             <FrontFrame
               slides={slides.front}
@@ -152,7 +140,6 @@ const Root = () => {
               footerRoot={footerRoot}
               nextSlide={sliderState.front}
               setSliderState={setSliderState}
-              swipeThreshold={swipeThreshold}
             >
               <Header show={show} toggleLang={toggleLang} secondActive={secondActive} duplicate />
             </FrontFrame>
