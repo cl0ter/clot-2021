@@ -20,12 +20,12 @@ const loadVideos = () =>
     }
 
     const handleCanPT = (evt: Event) => {
-      console.log('can pt: %o. Loaded: %o/%o', evt.target, loaded + 1, videos.length)
+      // console.log('can pt: %o. Loaded: %o/%o', evt.target, loaded + 1, videos.length)
       increase(evt)
     }
 
     const handleError = (evt: Event) => {
-      console.log('error (still inc tho): %o. Loaded: %o/%o', evt.target, loaded + 1, videos.length)
+      // console.log('error (still inc tho): %o. Loaded: %o/%o', evt.target, loaded + 1, videos.length)
       increase(evt)
     }
 
@@ -74,7 +74,7 @@ const useSlides = (lang: Lang) => {
 
     const beginLoading = async () => {
       await Promise.all([req(), delay()])
-      console.log('done!')
+      // console.log('done!')
       setLoaded(true)
     }
 

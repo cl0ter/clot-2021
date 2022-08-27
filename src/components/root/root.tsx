@@ -37,6 +37,7 @@ const Root = () => {
 
   // Wheel
   const frontFrameRef = footerRoot
+  const backFrameRef = useRef<HTMLDivElement>(null)
 
   const wheelTrigger = useCallback(
     (direction) => {
@@ -71,17 +72,23 @@ const Root = () => {
       return
     }
 
-    const el = rootRef.current
-    if (el !== null) {
-      events.add(el, wheelTrigger)
+    if (
+      rootRef.current !== null &&
+      frontFrameRef.current !== null &&
+      backFrameRef.current !== null
+    ) {
+      events.add({
+        rootEl: rootRef.current,
+        frontEl: frontFrameRef.current,
+        backEl: backFrameRef.current,
+        triggerFn: wheelTrigger
+      })
     }
 
     return () => {
-      if (el !== null) {
-        events.remove(el)
-      }
+      events.remove()
     }
-  }, [wheelTrigger, loaded])
+  }, [wheelTrigger, loaded, frontFrameRef])
 
   const vc = useRef<ReturnType<typeof videoController.init>>()
 
@@ -120,12 +127,14 @@ const Root = () => {
     }
   }, [loaded, activeFrame, sliderState])
 
+  const swipeThreshold = 50
+
   return (
     <StyleSheetManager disableVendorPrefixes={process.env.NODE_ENV === 'development'}>
       <>
         <GlobalStyle />
         <LangContext.Provider value={texts}>
-          <S.Root ref={rootRef} data-swipe-threshold={50}>
+          <S.Root ref={rootRef} data-swipe-threshold={swipeThreshold}>
             <Loader loaded={loaded} />
             <Qr visible={qrVisible} hide={hide} />
             <Header show={show} toggleLang={toggleLang} secondActive={secondActive} />
@@ -134,6 +143,8 @@ const Root = () => {
               secondActive={secondActive}
               nextSlide={sliderState.back}
               setSliderState={setSliderState}
+              swipeThreshold={swipeThreshold}
+              elRef={backFrameRef}
             />
             <FrontFrame
               slides={slides.front}
@@ -141,6 +152,7 @@ const Root = () => {
               footerRoot={footerRoot}
               nextSlide={sliderState.front}
               setSliderState={setSliderState}
+              swipeThreshold={swipeThreshold}
             >
               <Header show={show} toggleLang={toggleLang} secondActive={secondActive} duplicate />
             </FrontFrame>

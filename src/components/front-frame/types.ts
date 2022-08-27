@@ -7,4 +7,5 @@ export type FrontFrameProps = {
   footerRoot: RefObject<HTMLDivElement>
   nextSlide: number
   setSliderState: any
+  swipeThreshold: number
 }
