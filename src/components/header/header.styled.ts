@@ -1,8 +1,18 @@
-import styled, { css } from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
 import { link, button } from '../root/global.styled'
 import { HeaderProps } from './types'
 
-export const Header = styled.header`
+const hideTemporarily = keyframes`
+  from { visibility: hidden; }
+  to { visibility: visible; }
+`
+
+const showTemporarily = keyframes`
+  from { visibility: visible; }
+  to { visibility: hidden; }
+`
+
+export const Header = styled.header<{ secondActive: boolean; duplicate?: boolean }>`
   height: 80px;
   position: fixed;
   left: 0;
@@ -11,6 +21,26 @@ export const Header = styled.header`
   z-index: 4;
   display: flex;
   justify-content: center;
+
+  ${({ duplicate, secondActive }) => {
+    if (secondActive) {
+      return duplicate
+        ? css`
+            animation: ${hideTemporarily} 0s var(--slide-change-time) 1 both;
+          `
+        : css`
+            animation: ${showTemporarily} 0s var(--slide-change-time) 1 both;
+          `
+    } else {
+      return duplicate
+        ? css`
+            animation: ${showTemporarily} 0s 1 both;
+          `
+        : css`
+            animation: ${hideTemporarily} 0s 1 both;
+          `
+    }
+  }}
 
   @media (max-width: 428px) {
     height: 64px;

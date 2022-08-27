@@ -11,7 +11,7 @@ import * as S from './header.styled'
 import Logo from './logo'
 import { HeaderProps } from './types'
 
-const Header: FunctionComponent<HeaderProps> = ({ show, secondActive, toggleLang }) => {
+const Header: FunctionComponent<HeaderProps> = ({ show, secondActive, toggleLang, duplicate }) => {
   const texts = useContext(LangContext)
   const buttonRef = useRef<HTMLDivElement>(null)
 
@@ -28,7 +28,7 @@ const Header: FunctionComponent<HeaderProps> = ({ show, secondActive, toggleLang
     })()
 
     buttonRef.current.style.marginLeft = `${margin}px`
-  }, [secondActive])
+  }, [secondActive, duplicate])
 
   const handleToggleLang = useCallback(
     (evt: SyntheticEvent<HTMLSpanElement>) => {
@@ -39,7 +39,7 @@ const Header: FunctionComponent<HeaderProps> = ({ show, secondActive, toggleLang
   )
 
   return (
-    <S.Header>
+    <S.Header secondActive={secondActive} duplicate={duplicate}>
       <S.Container>
         <S.Left>
           <S.Logo href="/">

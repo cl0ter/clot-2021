@@ -43,6 +43,8 @@ export const GlobalStyle = createGlobalStyle`
     --width: max(100%, var(--min-width));
     --padding: 32px;
 
+    --slide-change-time: 0.4s;
+
     @media (max-width: 428px) {
       --padding: 16px;
     }

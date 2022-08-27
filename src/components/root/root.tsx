@@ -141,7 +141,9 @@ const Root = () => {
               footerRoot={footerRoot}
               nextSlide={sliderState.front}
               setSliderState={setSliderState}
-            />
+            >
+              <Header show={show} toggleLang={toggleLang} secondActive={secondActive} duplicate />
+            </FrontFrame>
           </S.Root>
         </LangContext.Provider>
       </>

@@ -109,7 +109,13 @@ const SliderFrame: FunctionComponent<SliderFrameProps> = ({
                 vertical={frameId === Frame.BACK}
                 data-video=""
               >
-                <video className={`${frameId}-video`} muted playsInline preload="auto" autoPlay>
+                <video
+                  className={`${frameId}-video`}
+                  muted
+                  playsInline
+                  preload="auto"
+                  // autoPlay
+                >
                   <source src={video} type="video/mp4" />
                 </video>
               </S.Video>

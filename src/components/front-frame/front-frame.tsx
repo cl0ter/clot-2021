@@ -15,11 +15,13 @@ const FrontFrame: FunctionComponent<FrontFrameProps> = ({
   secondActive,
   footerRoot,
   nextSlide,
-  setSliderState
+  setSliderState,
+  children
 }) => {
   return (
     <S.Container secondActive={secondActive} ref={footerRoot}>
       <ThemeProvider theme={theme}>
+        {children}
         <SliderFrame
           slides={slides}
           frameId={Frame.FRONT}

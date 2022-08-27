@@ -9,7 +9,7 @@ export const Container = styled.section<{ secondActive: boolean }>`
   top: 0;
   left: 0;
   transform-origin: center top;
-  transition: transform linear 0.4s, filter linear 0.4s;
+  transition: transform linear var(--slide-change-time), filter linear var(--slide-change-time);
   backface-visibility: hidden;
 
   ${({ secondActive }) =>
