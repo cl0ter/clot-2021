@@ -108,6 +108,7 @@ const SliderFrame: FunctionComponent<SliderFrameProps> = ({
                 horizontal={frameId === Frame.FRONT}
                 vertical={frameId === Frame.BACK}
               >
+                {/* autoPlay is required for ios */}
                 <video className={`${frameId}-video`} muted playsInline preload="auto" autoPlay>
                   <source src={video} type="video/mp4" />
                 </video>

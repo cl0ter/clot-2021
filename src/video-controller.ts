@@ -5,12 +5,12 @@ const resumeEvents = ['playing', '__seeked']
 
 const init = (setSliderState: any) => {
   const videos = {
-    front: document.querySelectorAll<HTMLVideoElement>(`.front-video`),
-    back: document.querySelectorAll<HTMLVideoElement>(`.back-video`)
+    front: Array.from(document.querySelectorAll<HTMLVideoElement>(`.front-video`)),
+    back: Array.from(document.querySelectorAll<HTMLVideoElement>(`.back-video`))
   }
   const parts = {
-    front: document.querySelectorAll<HTMLSpanElement>(`.front-part`),
-    back: document.querySelectorAll<HTMLSpanElement>(`.back-part`)
+    front: Array.from(document.querySelectorAll<HTMLSpanElement>(`.front-part`)),
+    back: Array.from(document.querySelectorAll<HTMLSpanElement>(`.back-part`))
   }
 
   let lastFrame: Frame | null = null
@@ -114,14 +114,6 @@ const init = (setSliderState: any) => {
 
     addEvents({ video, handleEnd, handlePause, handleResume })
 
-    await video.play()
-
-    // -- Parts handling
-    parts[activeFrame].forEach((part, partIdx) => {
-      part.style.animationName = '__paused'
-      part.style.width = partIdx < idx ? '100%' : '0%'
-    })
-
     const duration = (() => {
       if (Number.isNaN(video.duration)) {
         console.warn('Failed to get duration for %o', video)
@@ -130,9 +122,16 @@ const init = (setSliderState: any) => {
       return video.duration
     })()
 
-    // FIXME: this should be set before the video started playing
+    // -- Parts handling
+    parts[activeFrame].forEach((part, partIdx) => {
+      part.style.animationName = '__paused'
+      part.style.width = partIdx < idx ? '100%' : '0%'
+    })
+
     part.style.animationDuration = `${duration}s`
     part.style.animationName = ''
+
+    await video.play()
   }
 
   const stopVideo = (lastFrame: Frame, lastSliderState: GlobalSliderState) => {
@@ -144,7 +143,6 @@ const init = (setSliderState: any) => {
 
     removeEvents()
 
-    // -- Parts handling
     const lastPart = parts[lastFrame][idx]
     if (idx < parts[lastFrame].length - 1) {
       lastPart.style.width = '100%'
@@ -155,18 +153,20 @@ const init = (setSliderState: any) => {
 
   const updateSlide = (activeFrame: Frame, sliderState: GlobalSliderState) => {
     if (lastSliderState === null || lastFrame === null) {
-      // First call, store values and play vid
+      // First call:
+      // Pause all videos - negate autoPlay attribute
+      ;[...videos.back, ...videos.front].forEach((video) => video.pause())
+      // Store values and play vid
       playVideo(activeFrame, sliderState)
 
       lastSliderState = sliderState
       lastFrame = activeFrame
     } else if (sliderState !== lastSliderState) {
       if (lastFrame === activeFrame && lastSliderState[lastFrame] === sliderState[activeFrame]) {
-        // Frames and slides match, prob first iteration
-        // Ignore, but update last values afterwards
+        // Frames and slides match – first iteration, ignore
       } else {
         // console.log(
-        //   'Pausing and reseting last frame/slide: %o/%o. Playing next frame/slide: %o/%o',
+        //   'Pausing and resetting last frame/slide: %o/%o. Playing next frame/slide: %o/%o',
         //   lastFrame,
         //   lastSliderState[lastFrame],
         //   activeFrame,

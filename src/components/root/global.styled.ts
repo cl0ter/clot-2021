@@ -13,6 +13,7 @@ export const GlobalStyle = createGlobalStyle`
     font: 400 16px/22px 'Euclid Circular A';
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overscroll-behavior: contain; // Prevent pull-to-refresh on android
   }
 
   #root {
