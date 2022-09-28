@@ -2,82 +2,72 @@
   "ru": {
     "back": [
       {
-        "title": "Топовый кошелек для NFT",
-        "description": "for iOS and Android",
+        "title": "Multichain NFT App",
+        "description": "Ethereum, Solana, Stargaze, and Binance SmartChain supported",
         "video": "media/app-1.mp4"
       },
       {
         "title": "All wallets in one place",
-        "description": "some description",
+        "description": "explore your NFT portfolio better",
         "video": "media/app-2.mp4"
       },
       {
-        "title": "The best Wallet for NFTs",
-        "description": "for iOS and Android",
-        "video": "media/app-1.mp4"
-      },
-      {
-        "title": "В двух словах",
-        "description": "some description",
-        "video": "media/app-2.mp4"
+        "title": "Detailed NFT information",
+        "description": "download, share or explore your collection in the native mobile interface",
+        "video": "media/app-3.mp4"
       }
     ],
     "front": [
       {
-        "title": "First NFT App for TV",
-        "description": "for Apple TV, Android TV and Tizen",
+        "title": "First multichain NFT app",
+        "description": "for your smart TV",
         "video": "media/tv-1.mp4"
       },
       {
-        "title": "All wallets in one place",
-        "description": "some description",
+        "title": "Interactive NFT Gallary",
+        "description": "display your NTF on the full TV screen",
         "video": "media/tv-2.mp4"
       },
       {
-        "title": "First NFT App for TV",
-        "description": "for Apple TV, Android TV and Tizen",
-        "video": "media/tv-1.mp4"
+        "title": "Import all of your wallets in a few seconds",
+        "description": "from Clot iOS or another WalletConnect compatible wallet",
+        "video": "media/tv-3.mp4"
       }
     ]
   },
   "en": {
     "back": [
       {
-        "title": "The best Wallet for NFTs",
-        "description": "for iOS and Android",
+        "title": "Multichain NFT App",
+        "description": "Ethereum, Solana, Stargaze, and Binance SmartChain supported",
         "video": "media/app-1.mp4"
       },
       {
         "title": "All wallets in one place",
-        "description": "some description",
+        "description": "explore your NFT portfolio better",
         "video": "media/app-2.mp4"
       },
       {
-        "title": "The best Wallet for NFTs",
-        "description": "for iOS and Android",
-        "video": "media/app-1.mp4"
-      },
-      {
-        "title": "All wallets in one place",
-        "description": "some description",
-        "video": "media/app-2.mp4"
+        "title": "Detailed NFT information",
+        "description": "download, share or explore your collection in the native mobile interface",
+        "video": "media/app-3.mp4"
       }
     ],
     "front": [
       {
-        "title": "First NFT App for TV",
-        "description": "for Apple TV, Android TV and Tizen",
+        "title": "First multichain NFT app",
+        "description": "for your Smart TV",
         "video": "media/tv-1.mp4"
       },
       {
-        "title": "All wallets in one place",
-        "description": "some description",
+        "title": "Interactive NFT Gallary",
+        "description": "display your NTF on the full TV screen",
         "video": "media/tv-2.mp4"
       },
       {
-        "title": "First NFT App for TV",
-        "description": "for Apple TV, Android TV and Tizen",
-        "video": "media/tv-1.mp4"
+        "title": "Import all of your wallets in a few seconds",
+        "description": "from Clot iOS or another WalletConnect compatible wallet",
+        "video": "media/tv-3.mp4"
       }
     ]
   }

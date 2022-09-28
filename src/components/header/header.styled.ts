@@ -77,6 +77,7 @@ export const Lang = styled.div`
   padding: 0 24px;
   display: flex;
   align-items: center;
+  display: none;
 
   span {
     ${link}
