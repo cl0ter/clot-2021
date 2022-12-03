@@ -46,10 +46,10 @@
     ],
 
     "bottomLinks": [
-      { "text": "Terms of Service", "url": "./" },
-      { "text": "Privacy Policy", "url": "./" }
+      { "text": "Terms of Service", "url": "https://github.com/clotwallet/clot-resources/blob/main/docs/terms.md" },
+      { "text": "Privacy Policy", "url": "https://github.com/clotwallet/clot-resources/blob/main/docs/privacy.md" }
     ],
-    "copyright": "© 2021 Clot Ltd"
+    "copyright": "© 2022 Clot OU"
   },
   "ru": {
     "appStoreLink": "https://apps.apple.com/us/app/apple-store/id375380948",
@@ -98,9 +98,9 @@
     ],
 
     "bottomLinks": [
-      { "text": "Terms of Service", "url": "./" },
-      { "text": "Privacy Policy", "url": "./" }
+      { "text": "Terms of Service", "url": "https://github.com/clotwallet/clot-resources/blob/main/docs/terms.md" },
+      { "text": "Privacy Policy", "url": "https://github.com/clotwallet/clot-resources/blob/main/docs/privacy.md" }
     ],
-    "copyright": "© 2021 Clot Ltd"
+    "copyright": "© 2022 Clot OU"
   }
 }
