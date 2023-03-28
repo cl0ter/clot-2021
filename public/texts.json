@@ -32,7 +32,7 @@
         "title": "Help",
         "list": [
           { "text": "Help Center", "url": "./" },
-          { "text": "Support", "url": "./" }
+          { "text": "Support", "url": "https://github.com/clotwallet/clot-resources/discussions/1" }
         ]
       },
       {
@@ -84,7 +84,7 @@
         "title": "Help",
         "list": [
           { "text": "Help Center", "url": "./" },
-          { "text": "Support", "url": "./" }
+          { "text": "Support", "url": "https://github.com/clotwallet/clot-resources/discussions/1" }
         ]
       },
       {
